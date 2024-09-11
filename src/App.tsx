@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import SignUp from './auth/SignUp'
-import SignIn from './auth/SignIn'
-import AuthLayout from './auth/AuthLayout'
+import SignIn from '@/auth/SignIn'
+import SignUp from '@/auth/SignUp'
+import AuthLayout from '@/auth/AuthLayout'
 
 function App() {
   const [count, setCount] = useState(0)
