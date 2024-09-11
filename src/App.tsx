@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <h1>Insta for Devs</h1>
+      <h1 className='text-5xl text-red-800'>Insta for Devs</h1>
     </>
   )
 }

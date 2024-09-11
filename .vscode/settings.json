@@ -27,5 +27,10 @@
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "workbench.colorTheme": "Kimbie Dark",
-  "prisma.showPrismaDataPlatformNotification": false
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
 }
