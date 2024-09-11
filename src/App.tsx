@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import './App.css'
 import SignIn from '@/auth/SignIn'
 import SignUp from '@/auth/SignUp'
 import AuthLayout from '@/auth/AuthLayout'
