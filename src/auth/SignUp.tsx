@@ -13,10 +13,13 @@ import { Link } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { account } from '@/lib/appwrite'
+import { ID } from 'appwrite'
+import { createAccount } from '@/services/appwrite'
 
 const formSchema = z.object({
-  name: z.string().min(2).max(10),
-  username: z.string().min(2).max(10),
+  name: z.string().min(2).max(30),
+  username: z.string().min(2).max(20),
   email: z.string().email(),
   password: z.string().min(8)
 })
@@ -24,10 +27,14 @@ const formSchema = z.object({
 const SignUp = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { username: '' }
+    defaultValues: { name: '', username: '', email: '', password: '' }
   })
 
-  const onSubmit = () => {}
+  const onSubmit = async (user: z.infer<typeof formSchema>) => {
+    console.log(user)
+    await createAccount(user)
+    // console.log({ userCreated })
+  }
 
   return (
     <Form {...form}>
