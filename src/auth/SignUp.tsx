@@ -16,6 +16,7 @@ import { z } from 'zod'
 import { account } from '@/lib/appwrite'
 import { ID } from 'appwrite'
 import { createAccount } from '@/services/appwrite'
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
   name: z.string().min(2).max(30),
@@ -29,10 +30,18 @@ const SignUp = () => {
     resolver: zodResolver(formSchema),
     defaultValues: { name: '', username: '', email: '', password: '' }
   })
+  const { toast } = useToast()
 
   const onSubmit = async (user: z.infer<typeof formSchema>) => {
     console.log(user)
-    await createAccount(user)
+    try {
+      const newUser = await createAccount(user)
+
+      if (!newUser) toast({ title: 'Error creating account. Please try again' })
+    } catch (error) {
+      console.error(error)
+      toast({ title: error.message })
+    }
     // console.log({ userCreated })
   }
 

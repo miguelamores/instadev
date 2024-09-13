@@ -33,6 +33,6 @@ export const createAccount = async (user: INewUser) => {
     return newUser
   } catch (error) {
     console.error(error)
-    return error
+    throw error
   }
 }
