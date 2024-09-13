@@ -13,10 +13,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { account } from '@/lib/appwrite'
-import { ID } from 'appwrite'
-import { createAccount, signInAccount } from '@/services/appwrite'
 import { useToast } from '@/hooks/use-toast'
+import useAuth from '@/hooks/useAuth'
+import { getErrorMessage } from '@/utils'
 
 const formSchema = z.object({
   name: z.string().min(2).max(30),
@@ -33,14 +32,15 @@ const SignUp = () => {
   const { toast } = useToast()
   const navigate = useNavigate()
 
+  const { accountCreation, accountSignIn } = useAuth()
+
   const onSubmit = async (user: z.infer<typeof formSchema>) => {
-    console.log(user)
     try {
-      const newUser = await createAccount(user)
+      const newUser = await accountCreation.mutateAsync(user)
 
       if (!newUser) toast({ title: 'Error creating account. Please try again' })
 
-      const session = await signInAccount({
+      const session = await accountSignIn.mutateAsync({
         email: user.email,
         password: user.password
       })
@@ -50,9 +50,8 @@ const SignUp = () => {
       navigate('/sign-in')
     } catch (error) {
       console.error(error)
-      toast({ title: error.message })
+      toast({ title: getErrorMessage(error) })
     }
-    // console.log({ userCreated })
   }
 
   return (
@@ -117,7 +116,12 @@ const SignUp = () => {
             </FormItem>
           )}
         />
-        <Button type='submit'>Submit</Button>
+        <Button
+          type='submit'
+          disabled={accountCreation.isPending || accountSignIn.isPending}
+        >
+          Submit
+        </Button>
       </form>
       <p className='mt-4'>
         Do you already have an account?{' '}
