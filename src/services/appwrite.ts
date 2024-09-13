@@ -55,3 +55,22 @@ export const saveUserToDB = async (user: {
     throw error
   }
 }
+
+export const signInAccount = async (user: {
+  email: string
+  password: string
+}) => {
+  try {
+    await account.deleteSessions()
+    const session = await account.createEmailPasswordSession(
+      user.email,
+      user.password
+    )
+    if (!account) throw Error
+
+    return session
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}

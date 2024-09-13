@@ -9,13 +9,13 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { account } from '@/lib/appwrite'
 import { ID } from 'appwrite'
-import { createAccount } from '@/services/appwrite'
+import { createAccount, signInAccount } from '@/services/appwrite'
 import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
@@ -31,6 +31,7 @@ const SignUp = () => {
     defaultValues: { name: '', username: '', email: '', password: '' }
   })
   const { toast } = useToast()
+  const navigate = useNavigate()
 
   const onSubmit = async (user: z.infer<typeof formSchema>) => {
     console.log(user)
@@ -38,6 +39,15 @@ const SignUp = () => {
       const newUser = await createAccount(user)
 
       if (!newUser) toast({ title: 'Error creating account. Please try again' })
+
+      const session = await signInAccount({
+        email: user.email,
+        password: user.password
+      })
+
+      if (!session) toast({ title: 'Sign in failed. Please try again' })
+
+      navigate('/sign-in')
     } catch (error) {
       console.error(error)
       toast({ title: error.message })
