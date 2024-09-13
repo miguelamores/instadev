@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import SignIn from '@/auth/SignIn'
 import SignUp from '@/auth/SignUp'
 import AuthLayout from '@/auth/AuthLayout'
+import useSession from './hooks/useSession'
 
 function App() {
-  const [count, setCount] = useState(0)
+  useSession()
 
   return (
     <Routes>

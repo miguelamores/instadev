@@ -46,3 +46,13 @@ export type INewUser = {
   username: string
   password: string
 }
+
+export type ISessionStoreType = {
+  user: IUser
+  isLoading: boolean
+  isAuthenticated: boolean
+  setUser: (user: IUser) => void
+  setIsLoading: (isLoading: boolean) => void
+  setIsAuthenticated: (isAuthenticated: boolean) => void
+  checkAuthUser: () => Promise<boolean>
+}

@@ -1,4 +1,4 @@
-import { ID } from 'appwrite'
+import { ID, Query } from 'appwrite'
 import { account, appwriteConfig, avatar, database } from '@/lib/appwrite'
 import { INewUser } from '@/types'
 
@@ -69,6 +69,33 @@ export const signInAccount = async (user: {
     if (!account) throw Error
 
     return session
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const getAccount = async () => {
+  try {
+    const currentAccount = await account.get()
+    return currentAccount
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getCurrentUser = async () => {
+  try {
+    const currentAccount = await getAccount()
+    if (!currentAccount) throw Error
+
+    const accountSeesion = await database.listDocuments(
+      appwriteConfig.database,
+      appwriteConfig.userCollection,
+      [Query.equal('accountId', currentAccount.$id)]
+    )
+    console.log({ accountSeesion })
+    return accountSeesion.documents[0]
   } catch (error) {
     console.error(error)
     throw error
