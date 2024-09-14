@@ -29,7 +29,7 @@ const useSession = () => {
         setIsAuthenticated(true)
         return true
       }
-
+      setIsAuthenticated(false)
       return false
     } catch (error) {
       getErrorMessage(error)
@@ -50,7 +50,7 @@ const useSession = () => {
     checkAuthUser()
   }, [])
 
-  return { user, isAuthenticated }
+  return { user, isAuthenticated, checkAuthUser }
 }
 
 export default useSession
