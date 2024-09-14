@@ -1,14 +1,24 @@
 .root-layout {
   display: grid;
   height: 100dvh;
-  grid-template-rows: 4rem auto auto auto 4rem;
+  grid-template-rows: 4rem auto auto 4rem;
   grid-template-columns: minmax(4rem, min-content) auto;
   grid-template-areas:
     'header header header'
     'sidebar main main'
     'sidebar main main'
-    'sidebar main main'
-    'footer footer footer';
+    'sidebar main main';
+
+  @media (width < 768px) {
+    grid-template-rows: 4rem auto auto auto 4rem;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'header header header'
+      'main main main'
+      'main main main'
+      'main main main'
+      'footer footer footer';
+  }
 }
 
 .header {
@@ -19,6 +29,10 @@
 .sidebar {
   grid-area: sidebar;
   background-color: aquamarine;
+
+  @media (width < 768px) {
+    display: none;
+  }
 }
 
 .main {
@@ -29,4 +43,8 @@
 .footer {
   grid-area: footer;
   background-color: burlywood;
+
+  @media (width >= 768px) {
+    display: none;
+  }
 }
