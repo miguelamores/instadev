@@ -1,0 +1,32 @@
+.root-layout {
+  display: grid;
+  height: 100dvh;
+  grid-template-rows: 4rem auto auto auto 4rem;
+  grid-template-columns: minmax(4rem, min-content) auto;
+  grid-template-areas:
+    'header header header'
+    'sidebar main main'
+    'sidebar main main'
+    'sidebar main main'
+    'footer footer footer';
+}
+
+.header {
+  grid-area: header;
+  background-color: antiquewhite;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: aquamarine;
+}
+
+.main {
+  grid-area: main;
+  background-color: darkgrey;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: burlywood;
+}
