@@ -13,7 +13,7 @@ const RootLayout = () => {
         <Outlet />
       </main>
       {/* <footer className='footer sticky bottom-0'>footer</footer> */}
-      <div className='footer'>
+      <div className='footer sticky bottom-0'>
         <BottomNavigator />
       </div>
     </div>

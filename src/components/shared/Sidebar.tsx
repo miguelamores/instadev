@@ -11,10 +11,17 @@ const Sidebar = () => {
           return (
             <li
               key={link.route}
-              className={`flex items-center justify-between ${
-                isActive ? 'bg-slate-600 rounded-sm' : ''
+              className={`flex items-center justify-start gap-2 px-5 py-2 ${
+                isActive ? 'bg-slate-600 rounded-lg' : ''
               }`}
             >
+              <img
+                src={link.imgURL}
+                alt={link.label}
+                className='text-white'
+                width={26}
+                height={26}
+              />
               <Link to={link.route}>{link.label}</Link>
             </li>
           )

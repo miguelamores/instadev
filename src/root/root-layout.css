@@ -10,7 +10,7 @@
     'sidebar main main';
 
   @media (width < 768px) {
-    grid-template-rows: 4rem auto auto auto 4rem;
+    grid-template-rows: 4rem auto auto auto minmax(4rem, max-content);
     grid-template-columns: 1fr;
     grid-template-areas:
       'header header header'
