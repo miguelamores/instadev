@@ -2,7 +2,7 @@
   display: grid;
   height: 100dvh;
   grid-template-rows: 4rem auto auto 4rem;
-  grid-template-columns: minmax(4rem, min-content) auto;
+  grid-template-columns: minmax(10rem, max-content) auto;
   grid-template-areas:
     'header header header'
     'sidebar main main'
@@ -23,7 +23,7 @@
 
 .header {
   grid-area: header;
-  background-color: antiquewhite;
+  background-color: brown;
 }
 
 .sidebar {

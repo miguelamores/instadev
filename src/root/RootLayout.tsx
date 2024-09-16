@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import './root-layout.css'
+import Header from '@/components/shared/Header'
+import Sidebar from '@/components/shared/Sidebar'
 
 const RootLayout = () => {
   return (
     <div className='root-layout relative overflow-hidden'>
-      <header className='header sticky top-0 left-0 right-0'>header</header>
-      <aside className='sidebar'>aside</aside>
+      <Header />
+      <Sidebar />
       <main className='main overflow-y-scroll'>
         <Outlet />
       </main>

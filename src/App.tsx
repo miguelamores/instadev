@@ -5,6 +5,10 @@ import AuthLayout from '@/auth/AuthLayout'
 import useSession from '@/hooks/useSession'
 import Home from '@/root/pages/Home'
 import RootLayout from '@/root/RootLayout'
+import Saved from '@/root/pages/Saved'
+import CreatePost from '@/root/pages/CreatePost'
+import Explore from './root/pages/Explore'
+import People from './root/pages/People'
 
 function App() {
   useSession()
@@ -17,6 +21,10 @@ function App() {
       </Route>
       <Route element={<RootLayout />}>
         <Route path='/' element={<Home />} />
+        <Route path='/saved' element={<Saved />} />
+        <Route path='/create-post' element={<CreatePost />} />
+        <Route path='/explore' element={<Explore />} />
+        <Route path='/all-users' element={<People />} />
       </Route>
     </Routes>
   )
