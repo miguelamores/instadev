@@ -61,7 +61,7 @@ export const signInAccount = async (user: {
   password: string
 }) => {
   try {
-    await account.deleteSessions()
+    // await account.deleteSessions()
     const session = await account.createEmailPasswordSession(
       user.email,
       user.password
@@ -78,6 +78,7 @@ export const signInAccount = async (user: {
 export const getAccount = async () => {
   try {
     const currentAccount = await account.get()
+    if (!currentAccount) throw Error
     return currentAccount
   } catch (error) {
     console.error(error)
@@ -86,6 +87,7 @@ export const getAccount = async () => {
 
 export const getCurrentUser = async () => {
   try {
+    // await account.deleteSessions()
     const currentAccount = await getAccount()
     if (!currentAccount) throw Error
 
@@ -99,5 +101,14 @@ export const getCurrentUser = async () => {
   } catch (error) {
     console.error(error)
     throw error
+  }
+}
+
+export const signOutAccount = async () => {
+  try {
+    const session = await account.deleteSession('current')
+    return session
+  } catch (error) {
+    console.error(error)
   }
 }
