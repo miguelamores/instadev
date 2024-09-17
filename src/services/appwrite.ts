@@ -1,6 +1,12 @@
 import { ID, Query } from 'appwrite'
-import { account, appwriteConfig, avatar, database } from '@/lib/appwrite'
-import { INewUser } from '@/types'
+import {
+  account,
+  appwriteConfig,
+  avatar,
+  database,
+  storage
+} from '@/lib/appwrite'
+import { INewPost, INewUser } from '@/types'
 
 export const createAccount = async (user: INewUser) => {
   try {
@@ -108,6 +114,54 @@ export const signOutAccount = async () => {
   try {
     const session = await account.deleteSession('current')
     return session
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const createPost = async (post: INewPost) => {
+  try {
+    const file = await storage.createFile(
+      appwriteConfig.storage,
+      ID.unique(),
+      post.file[0]
+    )
+
+    if (!file) throw Error
+
+    const fileUrl = await storage.getFilePreview(
+      appwriteConfig.storage,
+      file.$id
+    )
+
+    if (!fileUrl) {
+      await storage.deleteFile(appwriteConfig.storage, file.$id)
+      throw Error
+    }
+
+    const tags = post.tags?.replace(/ /g, '').split(',') || []
+    const newPost = {
+      creator: post.userId,
+      content: post.content,
+      tags,
+      location: post.location,
+      imageUrl: fileUrl,
+      imageId: file.$id
+    }
+
+    const createdPost = await database.createDocument(
+      appwriteConfig.database,
+      appwriteConfig.postCollection,
+      ID.unique(),
+      newPost
+    )
+
+    if (!createdPost) {
+      await storage.deleteFile(appwriteConfig.storage, file.$id)
+      throw Error
+    }
+
+    return createPost
   } catch (error) {
     console.error(error)
   }

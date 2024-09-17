@@ -18,10 +18,11 @@ import { toast } from '@/hooks/use-toast'
 import useSession from '@/hooks/useSession'
 import { getErrorMessage } from '@/utils'
 import ImageDrop from './ImageDrop'
+import { createPost } from '@/services/appwrite'
 
 const formSchema = z.object({
   content: z.string().min(2).max(2200),
-  image: z.custom(),
+  file: z.custom<File[]>(),
   location: z.string().min(2).max(200),
   tags: z.string().min(2).max(200)
 })
@@ -29,13 +30,15 @@ const formSchema = z.object({
 const PostForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { content: '', location: '', tags: '', image: null }
+    defaultValues: { content: '', location: '', tags: '', file: [] }
   })
+  const { user } = useSession()
 
   const navigate = useNavigate()
 
-  const onSubmit = async (user: z.infer<typeof formSchema>) => {
+  const onSubmit = async (post: z.infer<typeof formSchema>) => {
     try {
+      await createPost({ ...post, userId: user.id })
     } catch (error) {
       console.error(error)
       toast({ title: getErrorMessage(error) })
@@ -53,7 +56,7 @@ const PostForm = () => {
           name='content'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Content</FormLabel>
               <FormControl>
                 <Input placeholder='What are you thinking?...' {...field} />
               </FormControl>
@@ -64,12 +67,12 @@ const PostForm = () => {
         />
         <FormField
           control={form.control}
-          name='image'
+          name='file'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Image</FormLabel>
               <FormControl>
-                <ImageDrop />
+                <ImageDrop imageChange={field.onChange} />
               </FormControl>
 
               <FormMessage />
@@ -82,7 +85,7 @@ const PostForm = () => {
           name='location'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Location</FormLabel>
               <FormControl>
                 <Input placeholder='River of...' {...field} />
               </FormControl>

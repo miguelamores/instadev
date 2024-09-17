@@ -2,7 +2,11 @@ import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Button } from '@/components/ui/button'
 
-const ImageDrop = () => {
+type ImageDropProps = {
+  imageChange: (image: File[]) => void
+}
+
+const ImageDrop = ({ imageChange }: ImageDropProps) => {
   const [file, setFile] = useState<File[]>()
   const [fileUrl, setFileUrl] = useState('')
 
@@ -13,11 +17,15 @@ const ImageDrop = () => {
       const objUrl = URL.createObjectURL(acceptedFiles[0])
       console.log(objUrl)
       setFileUrl(objUrl)
+      imageChange(acceptedFiles)
     },
     [file]
   )
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { 'image/*': ['.jpeg', '.png', '.jpg'] }
+  })
 
   return (
     <div {...getRootProps()}>
