@@ -121,21 +121,14 @@ export const signOutAccount = async () => {
 
 export const createPost = async (post: INewPost) => {
   try {
-    const file = await storage.createFile(
-      appwriteConfig.storage,
-      ID.unique(),
-      post.file[0]
-    )
+    const file = await uploadFile(post.file[0])
 
     if (!file) throw Error
 
-    const fileUrl = await storage.getFilePreview(
-      appwriteConfig.storage,
-      file.$id
-    )
+    const fileUrl = await getFilePreview(file.$id)
 
     if (!fileUrl) {
-      await storage.deleteFile(appwriteConfig.storage, file.$id)
+      await deleteFile(file.$id)
       throw Error
     }
 
@@ -157,11 +150,45 @@ export const createPost = async (post: INewPost) => {
     )
 
     if (!createdPost) {
-      await storage.deleteFile(appwriteConfig.storage, file.$id)
+      await deleteFile(file.$id)
       throw Error
     }
 
     return createPost
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const uploadFile = async (file: File) => {
+  try {
+    const uploadedFile = await storage.createFile(
+      appwriteConfig.storage,
+      ID.unique(),
+      file
+    )
+
+    return uploadedFile
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const getFilePreview = async (fileId: string) => {
+  try {
+    const fileUrl = await storage.getFilePreview(appwriteConfig.storage, fileId)
+
+    return fileUrl
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const deleteFile = async (fileId: string) => {
+  try {
+    await storage.deleteFile(appwriteConfig.storage, fileId)
+
+    return { status: 'ok' }
   } catch (error) {
     console.error(error)
   }

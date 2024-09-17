@@ -38,7 +38,11 @@ const PostForm = () => {
 
   const onSubmit = async (post: z.infer<typeof formSchema>) => {
     try {
-      await createPost({ ...post, userId: user.id })
+      const newPost = await createPost({ ...post, userId: user.id })
+
+      if (!newPost) toast({ title: 'Error creating post, Please try again' })
+
+      navigate('/')
     } catch (error) {
       console.error(error)
       toast({ title: getErrorMessage(error) })
