@@ -9,16 +9,15 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import useAuth from '@/hooks/useAuth'
 import { toast } from '@/hooks/use-toast'
 import useSession from '@/hooks/useSession'
 import { getErrorMessage } from '@/utils'
 import ImageDrop from './ImageDrop'
-import { createPost } from '@/services/appwrite'
+import usePosts from '@/hooks/usePosts'
 
 const formSchema = z.object({
   content: z.string().min(2).max(2200),
@@ -33,12 +32,15 @@ const PostForm = () => {
     defaultValues: { content: '', location: '', tags: '', file: [] }
   })
   const { user } = useSession()
-
+  const { postCreation } = usePosts()
   const navigate = useNavigate()
 
   const onSubmit = async (post: z.infer<typeof formSchema>) => {
     try {
-      const newPost = await createPost({ ...post, userId: user.id })
+      const newPost = await postCreation.mutateAsync({
+        ...post,
+        userId: user.id
+      })
 
       if (!newPost) toast({ title: 'Error creating post, Please try again' })
 
@@ -112,7 +114,9 @@ const PostForm = () => {
             </FormItem>
           )}
         />
-        <Button type='submit'>Create Post</Button>
+        <Button type='submit' disabled={postCreation.isPending}>
+          Create Post
+        </Button>
       </form>
     </Form>
   )
