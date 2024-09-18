@@ -48,3 +48,7 @@ export const bottombarLinks = [
     label: 'Create'
   }
 ]
+
+export const QUERY_KEYS = {
+  GET_RECENT_POSTS: 'getRecentPosts'
+} as const
