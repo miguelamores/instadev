@@ -1,7 +1,7 @@
 import { QUERY_KEYS } from '@/consts'
-import { createPost } from '@/services/appwrite'
+import { createPost, getRecentPosts } from '@/services/appwrite'
 import { INewPost } from '@/types'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const usePosts = () => {
   const queryClient = useQueryClient()
@@ -12,7 +12,12 @@ const usePosts = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_RECENT_POSTS] })
   })
 
-  return { postCreation }
+  const recentPosts = useQuery({
+    queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+    queryFn: () => getRecentPosts()
+  })
+
+  return { postCreation, recentPosts }
 }
 
 export default usePosts
