@@ -6,9 +6,7 @@ type PostsContextProviderType = {
   client: PostContextType
 }
 
-type PostContextType = {
-  getRecentPosts(): Promise<Posts>
-}
+type PostContextType = () => Promise<Posts>
 
 const PostsContext = createContext<PostContextType | null>(null)
 

@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const usePosts = () => {
   const queryClient = useQueryClient()
-  const posts = usePostsContext()
+  const getRecentPosts = usePostsContext()
 
   const postCreation = useMutation({
     mutationFn: (post: INewPost) => createPost(post),
@@ -16,7 +16,7 @@ const usePosts = () => {
 
   const recentPosts = useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-    queryFn: () => posts.getRecentPosts()
+    queryFn: () => getRecentPosts()
   })
 
   return { postCreation, recentPosts }

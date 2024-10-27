@@ -10,7 +10,7 @@ import CreatePost from '@/root/pages/CreatePost'
 import Explore from './root/pages/Explore'
 import People from './root/pages/People'
 import { PostsContextProvider } from './context/PostsContext'
-import { posts } from './services/appwrite'
+import { getRecentPosts } from './services/appwrite'
 
 function App() {
   useSession()
@@ -25,7 +25,7 @@ function App() {
         <Route
           path='/'
           element={
-            <PostsContextProvider client={posts}>
+            <PostsContextProvider client={getRecentPosts}>
               <Home />
             </PostsContextProvider>
           }

@@ -194,27 +194,25 @@ const deleteFile = async (fileId: string) => {
   }
 }
 
-export const posts = {
-  getRecentPosts: async (): Promise<Posts> => {
-    try {
-      const posts = await database.listDocuments(
-        appwriteConfig.database,
-        appwriteConfig.postCollection,
-        [Query.orderDesc('$createdAt'), Query.limit(20)]
-      )
+export const getRecentPosts = async (): Promise<Posts> => {
+  try {
+    const posts = await database.listDocuments(
+      appwriteConfig.database,
+      appwriteConfig.postCollection,
+      [Query.orderDesc('$createdAt'), Query.limit(20)]
+    )
 
-      return {
-        documents: posts.documents.map(post => ({
-          $id: post.$id,
-          content: post.content,
-          tags: post.tags
-        })),
-        total: posts.total
-      }
-    } catch (error) {
-      console.error(error)
-      return { documents: [], total: 0 }
+    return {
+      documents: posts.documents.map(post => ({
+        $id: post.$id,
+        content: post.content,
+        tags: post.tags
+      })),
+      total: posts.total
     }
+  } catch (error) {
+    console.error(error)
+    return { documents: [], total: 0 }
   }
 }
 

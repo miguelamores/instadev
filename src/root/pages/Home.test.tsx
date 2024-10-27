@@ -8,23 +8,21 @@ const queryClient = new QueryClient()
 
 describe('Home page', () => {
   it('should render recent posts', async () => {
-    const fake = {
-      getRecentPosts: () =>
-        Promise.resolve({
-          documents: [
-            {
-              content: 'Level up your skills',
-              tags: ['programming', 'web', 'javascript'],
-              $id: '66e9a2c6002157b5f44d'
-            }
-          ],
-          total: 1
-        })
-    }
+    const getRecentPostsFake = () =>
+      Promise.resolve({
+        documents: [
+          {
+            content: 'Level up your skills',
+            tags: ['programming', 'web', 'javascript'],
+            $id: '66e9a2c6002157b5f44d'
+          }
+        ],
+        total: 1
+      })
 
     render(
       <QueryClientProvider client={queryClient}>
-        <PostsContextProvider client={fake}>
+        <PostsContextProvider client={getRecentPostsFake}>
           <Home />
         </PostsContextProvider>
       </QueryClientProvider>
