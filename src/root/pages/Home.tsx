@@ -6,6 +6,11 @@ const Home = () => {
   return (
     <div className='overflow-y-auto'>
       <p>home</p>
+      <ul>
+        {recentPosts?.data?.documents?.map(doc => (
+          <h2 key={doc.$id}>{doc.content}</h2>
+        ))}
+      </ul>
     </div>
   )
 }

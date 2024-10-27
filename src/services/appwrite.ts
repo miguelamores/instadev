@@ -6,7 +6,7 @@ import {
   database,
   storage
 } from '@/lib/appwrite'
-import { INewPost, INewUser } from '@/types'
+import { INewPost, INewUser, Post, Posts } from '@/types'
 
 export const createAccount = async (user: INewUser) => {
   try {
@@ -194,16 +194,40 @@ const deleteFile = async (fileId: string) => {
   }
 }
 
-export const getRecentPosts = async () => {
-  try {
-    const posts = await database.listDocuments(
-      appwriteConfig.database,
-      appwriteConfig.postCollection,
-      [Query.orderDesc('$createdAt'), Query.limit(20)]
-    )
+export const posts = {
+  getRecentPosts: async (): Promise<Posts> => {
+    try {
+      const posts = await database.listDocuments(
+        appwriteConfig.database,
+        appwriteConfig.postCollection,
+        [Query.orderDesc('$createdAt'), Query.limit(20)]
+      )
 
-    return posts
-  } catch (error) {
-    console.error(error)
+      return {
+        documents: posts.documents.map(post => ({
+          $id: post.$id,
+          content: post.content,
+          tags: post.tags
+        })),
+        total: posts.total
+      }
+    } catch (error) {
+      console.error(error)
+      return { documents: [], total: 0 }
+    }
   }
 }
+
+// export const getRecentPosts = async () => {
+//   try {
+//     const posts = await database.listDocuments(
+//       appwriteConfig.database,
+//       appwriteConfig.postCollection,
+//       [Query.orderDesc('$createdAt'), Query.limit(20)]
+//     )
+
+//     return posts
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }

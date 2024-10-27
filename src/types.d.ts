@@ -56,3 +56,14 @@ export type ISessionStoreType = {
   setIsAuthenticated: (isAuthenticated: boolean) => void
   checkAuthUser: () => Promise<boolean>
 }
+
+export interface Posts {
+  documents: Post[]
+  total: number
+}
+
+export interface Post {
+  content: string
+  tags: string[]
+  $id: string
+}

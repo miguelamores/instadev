@@ -9,6 +9,8 @@ import Saved from '@/root/pages/Saved'
 import CreatePost from '@/root/pages/CreatePost'
 import Explore from './root/pages/Explore'
 import People from './root/pages/People'
+import { PostsContextProvider } from './context/PostsContext'
+import { posts } from './services/appwrite'
 
 function App() {
   useSession()
@@ -20,7 +22,14 @@ function App() {
         <Route path='/sign-in' element={<SignIn />} />
       </Route>
       <Route element={<RootLayout />}>
-        <Route path='/' element={<Home />} />
+        <Route
+          path='/'
+          element={
+            <PostsContextProvider client={posts}>
+              <Home />
+            </PostsContextProvider>
+          }
+        />
         <Route path='/saved' element={<Saved />} />
         <Route path='/create-post' element={<CreatePost />} />
         <Route path='/explore' element={<Explore />} />
