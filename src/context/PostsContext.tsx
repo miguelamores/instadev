@@ -1,4 +1,4 @@
-import { Posts } from '@/types'
+import { Models } from 'appwrite'
 import React, { createContext, useContext } from 'react'
 
 type PostsContextProviderType = {
@@ -6,7 +6,7 @@ type PostsContextProviderType = {
   client: PostContextType
 }
 
-type PostContextType = () => Promise<Posts>
+type PostContextType = () => Promise<Models.DocumentList<Models.Document>>
 
 const PostsContext = createContext<PostContextType | null>(null)
 

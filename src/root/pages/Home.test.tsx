@@ -14,7 +14,12 @@ describe('Home page', () => {
           {
             content: 'Level up your skills',
             tags: ['programming', 'web', 'javascript'],
-            $id: '66e9a2c6002157b5f44d'
+            $id: '66e9a2c6002157b5f44d',
+            $collectionId: '66e22516002ff99d7742',
+            $createdAt: '2024-09-17T15:39:50.918+00:00',
+            $databaseId: '66e2229e003345afds',
+            $updatedAt: '2024-09-17T15:39:50.918+00:00',
+            $permissions: ['a', 'b']
           }
         ],
         total: 1

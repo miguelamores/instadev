@@ -31,7 +31,14 @@ function App() {
           }
         />
         <Route path='/saved' element={<Saved />} />
-        <Route path='/create-post' element={<CreatePost />} />
+        <Route
+          path='/create-post'
+          element={
+            <PostsContextProvider client={getRecentPosts}>
+              <CreatePost />
+            </PostsContextProvider>
+          }
+        />
         <Route path='/explore' element={<Explore />} />
         <Route path='/all-users' element={<People />} />
       </Route>

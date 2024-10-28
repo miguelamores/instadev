@@ -125,7 +125,7 @@ export const createPost = async (post: INewPost) => {
 
     if (!file) throw Error
 
-    const fileUrl = await getFilePreview(file.$id)
+    const fileUrl = getFilePreview(file.$id)
 
     if (!fileUrl) {
       await deleteFile(file.$id)
@@ -174,9 +174,9 @@ const uploadFile = async (file: File) => {
   }
 }
 
-const getFilePreview = async (fileId: string) => {
+const getFilePreview = (fileId: string) => {
   try {
-    const fileUrl = await storage.getFilePreview(appwriteConfig.storage, fileId)
+    const fileUrl = storage.getFilePreview(appwriteConfig.storage, fileId)
 
     return fileUrl
   } catch (error) {
@@ -194,7 +194,7 @@ const deleteFile = async (fileId: string) => {
   }
 }
 
-export const getRecentPosts = async (): Promise<Posts> => {
+export const getRecentPosts = async () => {
   try {
     const posts = await database.listDocuments(
       appwriteConfig.database,
@@ -202,30 +202,9 @@ export const getRecentPosts = async (): Promise<Posts> => {
       [Query.orderDesc('$createdAt'), Query.limit(20)]
     )
 
-    return {
-      documents: posts.documents.map(post => ({
-        $id: post.$id,
-        content: post.content,
-        tags: post.tags
-      })),
-      total: posts.total
-    }
+    return posts
   } catch (error) {
     console.error(error)
     return { documents: [], total: 0 }
   }
 }
-
-// export const getRecentPosts = async () => {
-//   try {
-//     const posts = await database.listDocuments(
-//       appwriteConfig.database,
-//       appwriteConfig.postCollection,
-//       [Query.orderDesc('$createdAt'), Query.limit(20)]
-//     )
-
-//     return posts
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
