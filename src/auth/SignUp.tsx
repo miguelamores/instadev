@@ -40,14 +40,20 @@ const SignUp = () => {
     try {
       const newUser = await accountCreation.mutateAsync(user)
 
-      if (!newUser) toast({ title: 'Error creating account. Please try again' })
+      if (!newUser) {
+        toast({ title: 'Error creating account. Please try again' })
+        return
+      }
 
       const session = await accountSignIn.mutateAsync({
         email: user.email,
         password: user.password
       })
 
-      if (!session) toast({ title: 'Sign in failed. Please try again' })
+      if (!session) {
+        toast({ title: 'Sign in failed. Please try again' })
+        return
+      }
 
       const isLoguedIn = await checkAuthUser()
 
@@ -76,7 +82,6 @@ const SignUp = () => {
               <FormControl>
                 <Input placeholder='John Doe' {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}

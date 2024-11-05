@@ -40,7 +40,10 @@ const SignIn = () => {
         password: user.password
       })
 
-      if (!session) toast({ title: 'Sign in failed. Please try again' })
+      if (!session) {
+        toast({ title: 'Sign in failed. Please try again' })
+        return
+      }
 
       const isLoguedIn = await checkAuthUser()
 
