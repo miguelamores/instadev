@@ -19,7 +19,7 @@ export const createAccount = async (user: INewUser) => {
 
     if (!accountCreated) throw Error
 
-    const avatarUrl = avatar.getInitials(user.name) // TODO: verify if it's the correct method
+    const avatarUrl = avatar.getInitials(user.name)
 
     const newUser = await saveUserToDB({
       accountId: accountCreated.$id,
@@ -67,12 +67,11 @@ export const signInAccount = async (user: {
   password: string
 }) => {
   try {
-    // await account.deleteSessions()
     const session = await account.createEmailPasswordSession(
       user.email,
       user.password
     )
-    if (!account) throw Error
+    if (!session) throw Error
 
     return session
   } catch (error) {
@@ -201,6 +200,8 @@ export const getRecentPosts = async () => {
       appwriteConfig.postCollection,
       [Query.orderDesc('$createdAt'), Query.limit(20)]
     )
+
+    console.log(posts)
 
     return posts
   } catch (error) {
