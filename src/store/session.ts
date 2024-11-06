@@ -17,5 +17,5 @@ export const useSessionStore = create<ISessionStoreType>(set => ({
   setUser: user => set(() => ({ user })),
   setIsAuthenticated: isAuthenticated => set({ isAuthenticated }),
   setIsLoading: isLoading => set({ isLoading }),
-  checkAuthUser: async () => true
+  checkAuthUser: async () => false
 }))
