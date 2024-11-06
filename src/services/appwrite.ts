@@ -209,3 +209,39 @@ export const getRecentPosts = async () => {
     return { documents: [], total: 0 }
   }
 }
+
+export const savePost = async (userId: string, postId: string) => {
+  try {
+    const savedPost = await database.createDocument(
+      appwriteConfig.database,
+      appwriteConfig.savesCollection,
+      ID.unique(),
+      {
+        user: userId,
+        post: postId
+      }
+    )
+
+    if (!savePost) throw Error
+
+    return savedPost
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const deleteSavedPost = async (documentId: string) => {
+  try {
+    const deletedSave = await database.deleteDocument(
+      appwriteConfig.database,
+      appwriteConfig.savesCollection,
+      documentId
+    )
+
+    if (!deletedSave) throw Error
+
+    return true
+  } catch (error) {
+    console.error(error)
+  }
+}
