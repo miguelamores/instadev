@@ -9,12 +9,12 @@ const Home = () => {
   return (
     <div className='overflow-y-auto'>
       <p>home</p>
-      <ul>
+      <section className='flex flex-col items-center gap-4'>
         {posts?.documents?.map(doc => (
           // <h2 key={doc.$id}>{doc.content}</h2>
           <PostCard key={doc.$id} post={doc} />
         ))}
-      </ul>
+      </section>
     </div>
   )
 }
