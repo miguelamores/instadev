@@ -2,6 +2,7 @@ import { QUERY_KEYS } from '@/consts'
 import { deleteSavedPost, savePost } from '@/services/appwrite'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Models } from 'appwrite'
+import { toast } from '@/hooks/use-toast'
 
 const useSavePosts = () => {
   const queryClient = useQueryClient()
@@ -43,6 +44,7 @@ const useSavePosts = () => {
         [QUERY_KEYS.GET_CURRENT_USER],
         context?.previousUser
       )
+      toast({ title: 'Error saving post, please try again' })
     },
     onSettled: () => {
       queryClient.invalidateQueries({
@@ -86,6 +88,7 @@ const useSavePosts = () => {
         [QUERY_KEYS.GET_CURRENT_USER],
         context?.previousUser
       )
+      toast({ title: 'Error removing save, please try again' })
     },
     onSettled: () => {
       queryClient.invalidateQueries({
