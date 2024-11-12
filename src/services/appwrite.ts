@@ -209,8 +209,11 @@ export const getRecentPosts = async () => {
     return { documents: [], total: 0 }
   }
 }
-
+const delay = async (ms: number) =>
+  await new Promise(resolve => setTimeout(resolve, ms))
 export const savePost = async (userId: string, postId: string) => {
+  // await delay(1000)
+  // throw new Error('error save post')
   try {
     const savedPost = await database.createDocument(
       appwriteConfig.database,
