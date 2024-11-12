@@ -1,4 +1,5 @@
 import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
+import useLikePosts from '@/hooks/useLikePosts'
 import useSavePosts from '@/hooks/useSavePosts'
 import { Models } from 'appwrite'
 
@@ -9,16 +10,17 @@ type PostCardStatsType = {
 
 const PostCardStats = ({ post, userId }: PostCardStatsType) => {
   const { savePost, deleteSavedPost } = useSavePosts()
+  const { likePost, deleteLikedPost } = useLikePosts()
   const { data: currentUser } = useGetCurrentUser()
-  console.log({ post })
-  console.log({ currentUser })
 
   const savedPost = currentUser?.save.find(
     (record: Models.Document) => record.post.$id === post.$id
   )
-  console.log({ savedPost })
+  const likedPost = currentUser?.like.find(
+    (record: Models.Document) => record.post.$id === post.$id
+  )
 
-  const handleSavePost = e => {
+  const handleSavePost = () => {
     if (savedPost) {
       deleteSavedPost.mutate(savedPost.$id)
       return
@@ -26,15 +28,28 @@ const PostCardStats = ({ post, userId }: PostCardStatsType) => {
     savePost.mutate({ userId, postId: post.$id })
   }
 
+  const handleLikePost = () => {
+    if (likedPost) {
+      deleteLikedPost.mutate(likedPost.$id)
+      return
+    }
+    likePost.mutate({ userId, postId: post.$id })
+  }
+
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center'>
         <img
-          src='/public/assets/icons/like.svg'
+          src={`${
+            likedPost
+              ? '/public/assets/icons/liked.svg'
+              : '/public/assets/icons/like.svg'
+          }`}
           alt='like'
-          className='w-6 h-6 stroke-white'
+          className='w-6 h-6 stroke-white cursor-pointer'
           width={24}
           height={24}
+          onClick={handleLikePost}
         />
         <p>0</p>
       </div>
