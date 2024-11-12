@@ -248,3 +248,39 @@ export const deleteSavedPost = async (documentId: string) => {
     console.error(error)
   }
 }
+
+export const likePost = async (userId: string, postId: string) => {
+  try {
+    const likedPost = await database.createDocument(
+      appwriteConfig.database,
+      appwriteConfig.likesCollection,
+      ID.unique(),
+      {
+        user: userId,
+        post: postId
+      }
+    )
+
+    if (!likedPost) throw Error
+
+    return likedPost
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const deleteLikedPost = async (documentId: string) => {
+  try {
+    const deletedLike = await database.deleteDocument(
+      appwriteConfig.database,
+      appwriteConfig.likesCollection,
+      documentId
+    )
+
+    if (!deletedLike) throw Error
+
+    return true
+  } catch (error) {
+    console.error(error)
+  }
+}
