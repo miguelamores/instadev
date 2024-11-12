@@ -1,10 +1,10 @@
 import PostCard from '@/components/shared/PostCard'
-import usePosts from '@/hooks/usePosts'
+import { useGetRecentPosts } from '@/hooks/usePosts'
 
 const Home = () => {
   const {
     recentPosts: { data: posts, isPending }
-  } = usePosts()
+  } = useGetRecentPosts()
   // console.log(recentPosts.data)
   return (
     <div className='overflow-y-auto'>

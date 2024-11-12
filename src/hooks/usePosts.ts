@@ -4,9 +4,8 @@ import { createPost } from '@/services/appwrite'
 import { INewPost } from '@/types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-const usePosts = () => {
+export const useCreatePost = () => {
   const queryClient = useQueryClient()
-  const getRecentPosts = usePostsContext()
 
   const postCreation = useMutation({
     mutationFn: (post: INewPost) => createPost(post),
@@ -14,12 +13,16 @@ const usePosts = () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_RECENT_POSTS] })
   })
 
+  return { postCreation }
+}
+
+export const useGetRecentPosts = () => {
+  const getRecentPosts = usePostsContext()
+
   const recentPosts = useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
     queryFn: () => getRecentPosts()
   })
 
-  return { postCreation, recentPosts }
+  return { recentPosts }
 }
-
-export default usePosts

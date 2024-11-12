@@ -17,7 +17,7 @@ import { toast } from '@/hooks/use-toast'
 import useSession from '@/hooks/useSession'
 import { getErrorMessage } from '@/utils'
 import ImageDrop from './ImageDrop'
-import usePosts from '@/hooks/usePosts'
+import { useCreatePost } from '@/hooks/usePosts'
 
 const formSchema = z.object({
   content: z.string().min(2).max(2200),
@@ -32,7 +32,7 @@ const PostForm = () => {
     defaultValues: { content: '', location: '', tags: '', file: [] }
   })
   const { user } = useSession()
-  const { postCreation } = usePosts()
+  const { postCreation } = useCreatePost()
   const navigate = useNavigate()
 
   const onSubmit = async (post: z.infer<typeof formSchema>) => {

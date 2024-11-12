@@ -11,6 +11,7 @@ import Explore from './root/pages/Explore'
 import People from './root/pages/People'
 import { PostsContextProvider } from './context/PostsContext'
 import { getRecentPosts } from './services/appwrite'
+import EditPost from '@/root/pages/EditPost'
 
 function App() {
   useSession()
@@ -31,16 +32,10 @@ function App() {
           }
         />
         <Route path='/saved' element={<Saved />} />
-        <Route
-          path='/create-post'
-          element={
-            <PostsContextProvider client={getRecentPosts}>
-              <CreatePost />
-            </PostsContextProvider>
-          }
-        />
+        <Route path='/create-post' element={<CreatePost />} />
         <Route path='/explore' element={<Explore />} />
         <Route path='/all-users' element={<People />} />
+        <Route path='/post/:postId/edit' element={<EditPost />} />
       </Route>
     </Routes>
   )
