@@ -1,6 +1,11 @@
 import { QUERY_KEYS } from '@/consts'
 import { usePostsContext } from '@/context/PostsContext'
-import { createPost, getPostById, updatePost } from '@/services/appwrite'
+import {
+  createPost,
+  deletePost,
+  getPostById,
+  updatePost
+} from '@/services/appwrite'
 import { INewPost, IUpdatePost } from '@/types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -48,4 +53,19 @@ export const useGetPostById = (id: string) => {
   })
 
   return { post }
+}
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient()
+
+  const post = useMutation({
+    mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
+      deletePost(postId, imageId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      })
+  })
+
+  return post
 }
