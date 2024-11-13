@@ -6,7 +6,7 @@ import {
   database,
   storage
 } from '@/lib/appwrite'
-import { INewPost, INewUser, Post, Posts } from '@/types'
+import { INewPost, INewUser, IUpdatePost } from '@/types'
 
 export const createAccount = async (user: INewUser) => {
   try {
@@ -159,6 +159,66 @@ export const createPost = async (post: INewPost) => {
   }
 }
 
+export const updatePost = async (post: IUpdatePost) => {
+  const hasFileToUpdate = post.file.length > 0
+  try {
+    let image = {
+      imageUrl: post.imageUrl,
+      imageId: post.imageId
+    }
+
+    if (hasFileToUpdate) {
+      const file = await uploadFile(post.file[0])
+
+      if (!file) throw Error
+
+      const fileUrl = getFilePreview(file.$id)
+      if (!fileUrl) {
+        await deleteFile(file.$id)
+        throw Error
+      }
+      image = { ...image, imageId: file.$id, imageUrl: fileUrl }
+    }
+
+    const tags = post.tags?.replace(/ /g, '').split(',') || []
+    const newPost = {
+      content: post.content,
+      tags,
+      location: post.location,
+      imageUrl: image.imageUrl,
+      imageId: image.imageId
+    }
+
+    const updatedPost = await database.updateDocument(
+      appwriteConfig.database,
+      appwriteConfig.postCollection,
+      post.postId,
+      {
+        content: newPost.content,
+        tags: newPost.tags,
+        location: post.location,
+        imageUrl: newPost.imageUrl,
+        imageId: newPost.imageId
+      }
+    )
+
+    if (!updatedPost) {
+      if (hasFileToUpdate) {
+        await deleteFile(image.imageId)
+      }
+      throw Error
+    }
+
+    if (hasFileToUpdate) {
+      await deleteFile(post.imageId)
+    }
+
+    return updatedPost
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const uploadFile = async (file: File) => {
   try {
     const uploadedFile = await storage.createFile(
@@ -282,5 +342,22 @@ export const deleteLikedPost = async (documentId: string) => {
     return true
   } catch (error) {
     console.error(error)
+  }
+}
+
+export const getPostById = async (id: string) => {
+  try {
+    const post = await database.getDocument(
+      appwriteConfig.database,
+      appwriteConfig.postCollection,
+      id
+    )
+
+    if (!post) throw Error
+
+    return post
+  } catch (error) {
+    console.error(error)
+    throw Error('Post not found')
   }
 }
