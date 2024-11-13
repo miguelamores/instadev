@@ -30,6 +30,7 @@ const PostCard = ({ post }: PostCardType) => {
           {formatRelativeTime(post.creator.$createdAt)}
         </h3>
       </Link>
+      <Link to={`/post/${post.$id}/update`}>edit</Link>
       <p className='text-xl pt-3'>{post.content}</p>
       <p className='text-slate-500 py-3'>
         {post.tags.map((tag: string) => `#${tag} `)}
@@ -45,9 +46,6 @@ const PostCard = ({ post }: PostCardType) => {
             {post.content}
           </h5>
         </a> */}
-        <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
-          {post.content}
-        </p>
         <PostCardStats post={post} userId={user.id} />
       </div>
     </div>

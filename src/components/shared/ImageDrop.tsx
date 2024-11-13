@@ -4,11 +4,12 @@ import { Button } from '@/components/ui/button'
 
 type ImageDropProps = {
   imageChange: (image: File[]) => void
+  imageUrl: string
 }
 
-const ImageDrop = ({ imageChange }: ImageDropProps) => {
+const ImageDrop = ({ imageChange, imageUrl }: ImageDropProps) => {
   const [file, setFile] = useState<File[]>()
-  const [fileUrl, setFileUrl] = useState('')
+  const [fileUrl, setFileUrl] = useState(imageUrl ?? '')
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {

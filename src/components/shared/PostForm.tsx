@@ -17,7 +17,8 @@ import { toast } from '@/hooks/use-toast'
 import useSession from '@/hooks/useSession'
 import { getErrorMessage } from '@/utils'
 import ImageDrop from './ImageDrop'
-import { useCreatePost } from '@/hooks/usePosts'
+import { useCreatePost, useUpdatePost } from '@/hooks/usePosts'
+import { Models } from 'appwrite'
 
 const formSchema = z.object({
   content: z.string().min(2).max(2200),
@@ -26,19 +27,47 @@ const formSchema = z.object({
   tags: z.string().min(2).max(200)
 })
 
-const PostForm = () => {
+type PostFormProps = {
+  post: Models.Document
+  action: 'create' | 'update'
+}
+
+const PostForm = ({ post, action }: PostFormProps) => {
+  console.log({ post })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { content: '', location: '', tags: '', file: [] }
+    defaultValues: {
+      content: post.content ?? '',
+      location: post.location ?? '',
+      tags: post.tags.join(',') ?? '',
+      file: []
+    }
   })
   const { user } = useSession()
   const { postCreation } = useCreatePost()
+  const { mutateAsync: updatePost, isPending: isLoadingUpdatePost } =
+    useUpdatePost()
   const navigate = useNavigate()
 
-  const onSubmit = async (post: z.infer<typeof formSchema>) => {
+  const onSubmit = async (postForm: z.infer<typeof formSchema>) => {
     try {
+      if (action === 'update') {
+        const updatedPost = await updatePost({
+          ...postForm,
+          postId: post.$id,
+          imageId: post.imageId,
+          imageUrl: post.imageUrl
+        })
+
+        if (!updatedPost) {
+          toast({ title: 'Update post failed. Try again later' })
+        }
+
+        return navigate('/')
+      }
+
       const newPost = await postCreation.mutateAsync({
-        ...post,
+        ...postForm,
         userId: user.id
       })
 
@@ -78,7 +107,10 @@ const PostForm = () => {
             <FormItem>
               <FormLabel>Image</FormLabel>
               <FormControl>
-                <ImageDrop imageChange={field.onChange} />
+                <ImageDrop
+                  imageChange={field.onChange}
+                  imageUrl={post?.imageUrl}
+                />
               </FormControl>
 
               <FormMessage />
@@ -114,8 +146,11 @@ const PostForm = () => {
             </FormItem>
           )}
         />
-        <Button type='submit' disabled={postCreation.isPending}>
-          Create Post
+        <Button
+          type='submit'
+          disabled={postCreation.isPending || isLoadingUpdatePost}
+        >
+          {`${action === 'create' ? 'Create Post' : 'Update Post'}`}
         </Button>
       </form>
     </Form>

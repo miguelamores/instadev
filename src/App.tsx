@@ -11,7 +11,7 @@ import Explore from './root/pages/Explore'
 import People from './root/pages/People'
 import { PostsContextProvider } from './context/PostsContext'
 import { getRecentPosts } from './services/appwrite'
-import EditPost from '@/root/pages/EditPost'
+import UpdatePost from '@/root/pages/UpdatePost'
 
 function App() {
   useSession()
@@ -35,7 +35,7 @@ function App() {
         <Route path='/create-post' element={<CreatePost />} />
         <Route path='/explore' element={<Explore />} />
         <Route path='/all-users' element={<People />} />
-        <Route path='/post/:postId/edit' element={<EditPost />} />
+        <Route path='/post/:postId/update' element={<UpdatePost />} />
       </Route>
     </Routes>
   )
