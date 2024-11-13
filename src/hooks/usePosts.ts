@@ -21,8 +21,10 @@ export const useUpdatePost = () => {
 
   const postCreation = useMutation({
     mutationFn: (post: IUpdatePost) => updatePost(post),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.GET_RECENT_POSTS] })
+    onSuccess: post =>
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, post?.$id]
+      })
   })
 
   return postCreation
