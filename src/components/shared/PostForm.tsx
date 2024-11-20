@@ -37,9 +37,9 @@ const PostForm = ({ post, action }: PostFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: post.content ?? '',
-      location: post.location ?? '',
-      tags: post.tags.join(',') ?? '',
+      content: post?.content ?? '',
+      location: post?.location ?? '',
+      tags: post?.tags.join(',') ?? '',
       file: []
     }
   })
