@@ -23,12 +23,12 @@
 
 .header {
   grid-area: header;
-  background-color: brown;
+  background-color: #252728;
 }
 
 .sidebar {
   grid-area: sidebar;
-  background-color: aquamarine;
+  background-color: #1c1c1d;
 
   @media (width < 768px) {
     display: none;
@@ -37,7 +37,7 @@
 
 .main {
   grid-area: main;
-  /* background-color: darkgrey; */
+  background-color: #1c1c1d;
 }
 
 .footer {
