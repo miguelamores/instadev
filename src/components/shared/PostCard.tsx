@@ -31,7 +31,9 @@ const PostCard = ({ post }: PostCardType) => {
         </h3>
       </Link>
       <Link to={`/post/${post.$id}/update`}>edit</Link>
-      <p className='text-xl pt-3'>{post.content}</p>
+      <Link to={`/post/${post.$id}`} viewTransition>
+        <p className='text-xl pt-3'>{post.content}</p>
+      </Link>
       <p className='text-slate-500 py-3'>
         {post.tags.map((tag: string) => `#${tag} `)}
       </p>
