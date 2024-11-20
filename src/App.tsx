@@ -1,4 +1,9 @@
-import { Routes, Route } from 'react-router-dom'
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom'
 import SignIn from '@/auth/SignIn'
 import SignUp from '@/auth/SignUp'
 import AuthLayout from '@/auth/AuthLayout'
@@ -12,12 +17,11 @@ import People from './root/pages/People'
 import { PostsContextProvider } from './context/PostsContext'
 import { getRecentPosts } from './services/appwrite'
 import UpdatePost from '@/root/pages/UpdatePost'
+import PostDetail from './root/pages/PostDetail'
 
-function App() {
-  useSession()
-
-  return (
-    <Routes>
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
       <Route element={<AuthLayout />}>
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/sign-in' element={<SignIn />} />
@@ -36,9 +40,16 @@ function App() {
         <Route path='/explore' element={<Explore />} />
         <Route path='/all-users' element={<People />} />
         <Route path='/post/:postId/update' element={<UpdatePost />} />
+        <Route path='/post/:postId' element={<PostDetail />} />
       </Route>
-    </Routes>
+    </>
   )
+)
+
+function App() {
+  // useSession()
+
+  return <RouterProvider router={router} />
 }
 
 export default App
