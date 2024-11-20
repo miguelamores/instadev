@@ -1,6 +1,6 @@
 import { formatRelativeTime } from '@/lib/utils'
 import { Models } from 'appwrite'
-import { Link } from 'react-router-dom'
+import { Link, useViewTransitionState } from 'react-router-dom'
 import PostCardStats from './PostCardStats'
 import useSession from '@/hooks/useSession'
 
@@ -10,6 +10,8 @@ type PostCardType = {
 
 const PostCard = ({ post }: PostCardType) => {
   const { user } = useSession()
+
+  const isTransitioning = useViewTransitionState(`/post/${post.$id}`)
 
   return (
     <div className='shadow-sm shadow-black max-w-sm xl:max-w-3xl bg-[#252728] rounded-lg dark:bg-gray-800 dark:border-gray-700 p-3'>
@@ -38,6 +40,9 @@ const PostCard = ({ post }: PostCardType) => {
         {post.tags.map((tag: string) => `#${tag} `)}
       </p>
       <img
+        style={{
+          viewTransitionName: isTransitioning ? 'full-embed' : ''
+        }}
         className='rounded-lg'
         src={post.imageUrl}
         alt={`post image of ${post.creator.email}`}
