@@ -28,12 +28,11 @@ const formSchema = z.object({
 })
 
 type PostFormProps = {
-  post: Models.Document
+  post?: Models.Document
   action: 'create' | 'update'
 }
 
 const PostForm = ({ post, action }: PostFormProps) => {
-  console.log({ post })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,7 +50,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
   const onSubmit = async (postForm: z.infer<typeof formSchema>) => {
     try {
-      if (action === 'update') {
+      if (action === 'update' && post) {
         const updatedPost = await updatePost({
           ...postForm,
           postId: post.$id,
