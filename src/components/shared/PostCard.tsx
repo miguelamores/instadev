@@ -12,7 +12,7 @@ const PostCard = ({ post }: PostCardType) => {
   const { user } = useSession()
 
   return (
-    <div className='max-w-sm xl:max-w-3xl bg-transparent border border-gray-200/50 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-3'>
+    <div className='shadow-sm shadow-black max-w-sm xl:max-w-3xl bg-[#252728] rounded-lg dark:bg-gray-800 dark:border-gray-700 p-3'>
       <Link
         to={`/profile/${post.creator.$id}`}
         className='flex items-center gap-2 justify-start w-max'
