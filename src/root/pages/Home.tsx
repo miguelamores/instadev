@@ -7,8 +7,7 @@ const Home = () => {
   } = useGetRecentPosts()
   // console.log(recentPosts.data)
   return (
-    <div className='overflow-y-auto'>
-      <p>home</p>
+    <div className='overflow-y-auto p-4'>
       <section className='flex flex-col items-center gap-4'>
         {posts?.documents?.map(doc => (
           // <h2 key={doc.$id}>{doc.content}</h2>
