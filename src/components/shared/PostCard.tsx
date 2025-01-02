@@ -27,12 +27,12 @@ const PostCard = ({ post }: PostCardType) => {
           alt={`avatar of ${post.creator.email}`}
         />
         <h3 className='font-semibold text-xl'>{post.creator.name}</h3>
-        <h3 className='text-slate-500 text-base'>{post.creator.email}</h3> -
+        {/* <h3 className='text-slate-500 text-base'>{post.creator.email} - </h3> */}
         <h3 className='text-slate-500 text-base'>
           {formatRelativeTime(post.creator.$createdAt)}
         </h3>
       </Link>
-      <Link to={`/post/${post.$id}/update`}>edit</Link>
+      {/* <Link to={`/post/${post.$id}/update`}>edit</Link> */}
       <Link to={`/post/${post.$id}`} viewTransition>
         <p className='text-xl pt-3'>{post.content}</p>
       </Link>
