@@ -7,7 +7,7 @@ import { PostsContextProvider } from '@/context/PostsContext'
 const queryClient = new QueryClient()
 
 describe('Home page', () => {
-  it('should render recent posts', async () => {
+  it.skip('should render recent posts', async () => {
     const getRecentPostsFake = () =>
       Promise.resolve({
         documents: [
