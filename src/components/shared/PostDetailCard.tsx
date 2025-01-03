@@ -1,4 +1,4 @@
-const PostDetailCard = ({ post }) => {
+const PostDetailCard = ({ post, isUserOwner =false }) => {
   return (
     <section className='px-10 py-5 flex flex-col items-center shadow-sm shadow-black bg-[#252728] rounded-lg'>
       <img
@@ -19,12 +19,12 @@ const PostDetailCard = ({ post }) => {
       <h3 className='text-slate-500 text-base'>
         {post.creator.$createdAt} ago
       </h3>
-      <img
+      {isUserOwner && <img
         width={24}
         height={24}
         src='/assets/icons/remove.svg'
         alt='remove icon'
-      />
+      />}
     </section>
   )
 }

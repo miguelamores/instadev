@@ -51,8 +51,8 @@ describe('Post Detail page', () => {
     expect(date).toBeDefined()
   })
 
-  it('should show delete icon', () => {
-    render(<PostDetailCard post={fakePost} />)
+  it('should show delete icon if post owns authenticated user', () => {
+    render(<PostDetailCard post={fakePost} isUserOwner={true} />)
     const remove = screen.getByAltText('remove icon')
     expect(remove).toBeDefined()
   })
