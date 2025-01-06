@@ -9,8 +9,20 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { useDeletePost } from '@/hooks/usePosts'
+import { useNavigate } from 'react-router-dom'
 
 const PostDetailCard = ({ post, isUserOwner = false }) => {
+  const { mutateAsync: deletePost } = useDeletePost()
+  const navigate = useNavigate()
+
+  const handleConfirm = async () => {
+    const res = await deletePost({ postId: post.$id, imageId: post.imageId })
+    if (res?.status === 'ok') {
+      return navigate('/')
+    }
+  }
+
   return (
     <section className='px-10 py-5 flex flex-col items-center shadow-sm shadow-black bg-[#252728] rounded-lg'>
       <img
@@ -51,7 +63,9 @@ const PostDetailCard = ({ post, isUserOwner = false }) => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
+              <AlertDialogAction onClick={handleConfirm}>
+                Continue
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

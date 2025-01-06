@@ -1,7 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { describe, expect, it, afterEach } from 'vitest'
+import { describe, expect, it, afterEach, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import PostDetailCard from '@/components/shared/PostDetailCard'
+import { useDeletePost } from '@/hooks/usePosts'
+import { useNavigate } from 'react-router-dom'
 
 const fakePost = {
   content: 'Level up your skills',
@@ -14,6 +16,18 @@ const fakePost = {
   $permissions: ['a', 'b'],
   creator: { email: 'miguel@gmail.com' }
 }
+
+vi.mock('react-router-dom', () => {
+  return {
+    useNavigate: vi.fn(() => ({ navigate: vi.fn() }))
+  }
+})
+
+vi.mock('@/hooks/usePosts', () => {
+  return {
+    useDeletePost: vi.fn(() => ({ mutateAsync: vi.fn() }))
+  }
+})
 
 describe('Post Detail page', () => {
   afterEach(cleanup)
@@ -65,5 +79,19 @@ describe('Post Detail page', () => {
     await user.click(remove)
     const popup = screen.getByRole('alertdialog')
     expect(popup).toBeDefined()
+  })
+
+  it('should successfully delete post when confirmation is accepted', async () => {
+    const user = userEvent.setup()
+    useDeletePost.mockImplementation(() => ({
+      mutateAsync: async () => ({ status: 'ok' })
+    }))
+    useNavigate.mockReturnValue(() => ({ navigate: vi.fn() }))
+    render(<PostDetailCard post={fakePost} isUserOwner={true} />)
+    const remove = screen.getByRole('button', { name: 'remove icon' })
+    await user.click(remove)
+    const confirm = screen.getByRole('button', { name: 'Continue' })
+    await user.click(confirm)
+    expect(useDeletePost).toHaveBeenCalled()
   })
 })
