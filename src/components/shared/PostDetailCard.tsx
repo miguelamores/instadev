@@ -9,11 +9,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { Loader2 } from 'lucide-react'
 import { useDeletePost } from '@/hooks/usePosts'
 import { useNavigate } from 'react-router-dom'
 
 const PostDetailCard = ({ post, isUserOwner = false }) => {
-  const { mutateAsync: deletePost } = useDeletePost()
+  const { mutateAsync: deletePost, isPending } = useDeletePost()
   const navigate = useNavigate()
 
   const handleConfirm = async () => {
@@ -62,9 +63,10 @@ const PostDetailCard = ({ post, isUserOwner = false }) => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleConfirm}>
+              <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+              <AlertDialogAction disabled={isPending} onClick={handleConfirm}>
                 Continue
+                {isPending && <Loader2 className='animate-spin' />}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
