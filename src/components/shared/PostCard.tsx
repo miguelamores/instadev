@@ -11,6 +11,8 @@ type PostCardType = {
 const PostCard = ({ post }: PostCardType) => {
   const { user } = useSession()
 
+  const isUserOwner = post?.creator.email === user.email
+
   const isTransitioning = useViewTransitionState(`/post/${post.$id}`)
 
   return (
@@ -32,7 +34,7 @@ const PostCard = ({ post }: PostCardType) => {
           {formatRelativeTime(post.creator.$createdAt)}
         </h3>
       </Link>
-      {/* <Link to={`/post/${post.$id}/update`}>edit</Link> */}
+      {isUserOwner && <Link to={`/post/${post.$id}/update`}>edit</Link>}
       <Link to={`/post/${post.$id}`} viewTransition>
         <p className='text-xl pt-3'>{post.content}</p>
       </Link>

@@ -1,11 +1,17 @@
 import PostForm from '@/components/shared/PostForm'
 import { useGetPostById } from '@/hooks/usePosts'
-import { useParams } from 'react-router-dom'
+import useSession from '@/hooks/useSession'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const UpdatePost = () => {
   const { postId } = useParams()
+  const { user } = useSession()
+  const navigate = useNavigate()
 
   const { post } = useGetPostById(postId || '')
+  const isUserOwner = post.data?.creator.email === user.email
+
+  if (!isUserOwner) return navigate('/')
 
   if (post.isPending) return <p>Loading....</p>
   if (post.isError) return <p>{post.error.message ?? 'Error loading post'}</p>
