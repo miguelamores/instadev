@@ -1,5 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react'
 import { describe, expect, it, afterEach } from 'vitest'
+import userEvent from '@testing-library/user-event'
 import PostDetailCard from '@/components/shared/PostDetailCard'
 
 const fakePost = {
@@ -55,5 +56,14 @@ describe('Post Detail page', () => {
     render(<PostDetailCard post={fakePost} isUserOwner={true} />)
     const remove = screen.getByAltText('remove icon')
     expect(remove).toBeDefined()
+  })
+
+  it('should show popup confirmation when delete icon is clicked', async () => {
+    const user = userEvent.setup()
+    render(<PostDetailCard post={fakePost} isUserOwner={true} />)
+    const remove = screen.getByRole('button', { name: 'remove icon' })
+    await user.click(remove)
+    const popup = screen.getByRole('alertdialog')
+    expect(popup).toBeDefined()
   })
 })
