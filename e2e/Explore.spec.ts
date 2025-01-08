@@ -5,6 +5,12 @@ test.describe('Explore', () => {
     await page.goto('/')
     await page.locator('li').filter({ hasText: 'Explore' }).click()
 
-    await expect(page).toHaveURL('http://localhost:5173/explore')
+    await expect(page).toHaveURL('/explore')
+  })
+
+  test('should show a search input', async ({ page }) => {
+    await page.goto('/explore')
+
+    await expect(page.locator('input')).toBeVisible()
   })
 })
