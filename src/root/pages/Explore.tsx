@@ -8,12 +8,26 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+const searchSchema = z.object({
+  content: z.string().min(3).max(2200)
+})
 
 const Explore = () => {
-  const form = useForm()
+  const form = useForm<z.infer<typeof searchSchema>>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: { content: '' }
+  })
+  const [posts, setPosts] = useState([])
 
-  const onSubmit = (data: any) => {}
+  const onSubmit = (data: any) => {
+    console.log(data)
+    setPosts([{ id: 1, content: 'working on TDD...' }])
+  }
 
   return (
     <section>
@@ -29,7 +43,7 @@ const Explore = () => {
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  <Input placeholder='What are you thinking?...' {...field} />
+                  <Input placeholder='working on TDD...' {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -39,6 +53,16 @@ const Explore = () => {
           <Button type='submit'>Search</Button>
         </form>
       </Form>
+      {posts.length > 0 && (
+        <>
+          <h1>Results of {form.getValues().content}</h1>
+          <ul>
+            {posts.map(post => (
+              <li key={post.id}>{post.content}</li>
+            ))}
+          </ul>
+        </>
+      )}
     </section>
   )
 }
