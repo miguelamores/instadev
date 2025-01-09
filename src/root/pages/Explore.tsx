@@ -11,12 +11,11 @@ import {
 import { Input } from '@/components/ui/input'
 import { useSearchPosts } from '@/hooks/usePosts'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const searchSchema = z.object({
-  content: z.string().min(3).max(2200)
+  content: z.string().max(200)
 })
 
 const Explore = () => {
@@ -24,8 +23,10 @@ const Explore = () => {
     resolver: zodResolver(searchSchema),
     defaultValues: { content: '' }
   })
-  // const [posts, setPosts] = useState([])
-  const { data, isPending, hasNextPage, fetchNextPage } = useSearchPosts()
+
+  const { data, isPending, hasNextPage, fetchNextPage } = useSearchPosts(
+    form.getValues().content || ''
+  )
 
   const posts = data?.pages?.flatMap(page => page.documents)
 
@@ -61,7 +62,9 @@ const Explore = () => {
         <h1>Results of {form.getValues().content}</h1>
       )}
       {isPending ? <p>Loading...</p> : <ExploreList posts={posts} />}
-      <button onClick={() => fetchNextPage()}>Load more</button>
+      {hasNextPage && (
+        <button onClick={() => fetchNextPage()}>Load more</button>
+      )}
     </section>
   )
 }

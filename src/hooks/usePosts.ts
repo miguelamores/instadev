@@ -76,11 +76,12 @@ export const useDeletePost = () => {
   return post
 }
 
-export const useSearchPosts = () => {
+export const useSearchPosts = (searchTerm: string) => {
   const result = useInfiniteQuery({
-    queryKey: [QUERY_KEYS.SEARCH_POSTS],
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
     initialPageParam: '0',
-    queryFn: ({ pageParam }) => searchPosts({ pageParam: pageParam }),
+    queryFn: ({ pageParam }) =>
+      searchPosts({ pageParam: pageParam, searchTerm }),
     getNextPageParam: lastPage => {
       if (lastPage.documents.length === 0) {
         return undefined

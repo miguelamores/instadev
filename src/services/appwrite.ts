@@ -382,12 +382,23 @@ export const getPostById = async (id: string) => {
   }
 }
 
-export const searchPosts = async ({ pageParam }: { pageParam: string }) => {
+export const searchPosts = async ({
+  pageParam,
+  searchTerm
+}: {
+  pageParam: string
+  searchTerm: string
+}) => {
   try {
-    const queries = [Query.limit(2)]
+    const queries = [Query.limit(1)]
     if (pageParam !== '0') {
       queries.push(Query.cursorAfter(pageParam))
     }
+
+    if (searchTerm) {
+      queries.push(Query.search('content', searchTerm))
+    }
+
     const posts = await database.listDocuments(
       appwriteConfig.database,
       appwriteConfig.postCollection,
