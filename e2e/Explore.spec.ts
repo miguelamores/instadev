@@ -13,4 +13,15 @@ test.describe('Explore', () => {
 
     await expect(page.locator('input')).toBeVisible()
   })
+
+  test('should load more results on press load more button', async ({
+    page
+  }) => {
+    await page.goto('/explore')
+    const actualResultsNumber = await page.getByRole('list').count()
+
+    await page.locator('button', { hasText: 'Load more' }).click()
+    const list = await page.getByRole('listitem').count()
+    expect(list).toBeGreaterThan(actualResultsNumber)
+  })
 })
