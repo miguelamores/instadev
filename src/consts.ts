@@ -52,5 +52,6 @@ export const bottombarLinks = [
 export const QUERY_KEYS = {
   GET_RECENT_POSTS: 'getRecentPosts',
   GET_CURRENT_USER: 'getCurrentUser',
-  GET_POST_BY_ID: 'getPostById'
+  GET_POST_BY_ID: 'getPostById',
+  SEARCH_POSTS: 'searchPosts'
 } as const

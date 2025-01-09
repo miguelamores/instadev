@@ -381,3 +381,22 @@ export const getPostById = async (id: string) => {
     throw Error('Post not found')
   }
 }
+
+export const searchPosts = async ({ pageParam }: { pageParam: string }) => {
+  try {
+    const queries = [Query.limit(2)]
+    if (pageParam !== '0') {
+      queries.push(Query.cursorAfter(pageParam))
+    }
+    const posts = await database.listDocuments(
+      appwriteConfig.database,
+      appwriteConfig.postCollection,
+      queries
+    )
+
+    return posts
+  } catch (error) {
+    console.error(error)
+    return { documents: [], total: 0 }
+  }
+}

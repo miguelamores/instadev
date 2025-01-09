@@ -4,10 +4,16 @@ import {
   createPost,
   deletePost,
   getPostById,
+  searchPosts,
   updatePost
 } from '@/services/appwrite'
 import { INewPost, IUpdatePost } from '@/types'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient
+} from '@tanstack/react-query'
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient()
@@ -68,4 +74,21 @@ export const useDeletePost = () => {
   })
 
   return post
+}
+
+export const useSearchPosts = () => {
+  const result = useInfiniteQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS],
+    initialPageParam: '0',
+    queryFn: ({ pageParam }) => searchPosts({ pageParam: pageParam }),
+    getNextPageParam: lastPage => {
+      if (lastPage.documents.length === 0) {
+        return undefined
+      }
+      const lastId = lastPage?.documents.at(-1)?.$id
+      return lastId
+    }
+  })
+
+  return result
 }
