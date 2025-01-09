@@ -1,5 +1,4 @@
 import { ExploreList } from '@/components/shared/ExploreList'
-import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -30,7 +29,7 @@ const Explore = () => {
 
   const posts = data?.pages?.flatMap(page => page.documents)
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: z.infer<typeof searchSchema>) => {
     console.log(data)
   }
 
@@ -55,12 +54,12 @@ const Explore = () => {
               </FormItem>
             )}
           />
-          <Button type='submit'>Search</Button>
         </form>
       </Form>
       {form.getValues().content && (
         <h1>Results of {form.getValues().content}</h1>
       )}
+      {!form.getValues().content && <h1>Popular</h1>}
       {isPending ? <p>Loading...</p> : <ExploreList posts={posts} />}
       {hasNextPage && (
         <button onClick={() => fetchNextPage()}>Load more</button>

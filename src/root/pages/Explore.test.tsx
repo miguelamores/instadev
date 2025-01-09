@@ -32,7 +32,7 @@ describe('Explore search input', () => {
     // user press enter
     await user.keyboard('{enter}')
     // check if the results are displayed
-    expect(screen.getByText('Results of TDD posts')).toBeDefined()
+    await expect(screen.getByText('Results of TDD posts')).toBeDefined()
   })
 
   it.skip('should show a list of posts', async () => {
