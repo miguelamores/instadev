@@ -34,7 +34,7 @@ const Explore = () => {
   }
 
   return (
-    <section>
+    <section className='w-full flex flex-col items-center gap-4'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -44,8 +44,8 @@ const Explore = () => {
             control={form.control}
             name='content'
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
+              <FormItem className='w-full flex flex-row items-center gap-4'>
+                <FormLabel>Search</FormLabel>
                 <FormControl>
                   <Input placeholder='working on TDD...' {...field} />
                 </FormControl>
