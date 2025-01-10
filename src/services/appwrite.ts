@@ -390,7 +390,7 @@ export const searchPosts = async ({
   searchTerm: string
 }) => {
   try {
-    const queries = [Query.limit(1)]
+    const queries = [Query.limit(1), Query.orderDesc('$updatedAt')]
     if (pageParam !== '0') {
       queries.push(Query.cursorAfter(pageParam))
     }
