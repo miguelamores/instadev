@@ -9,6 +9,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useDebounce } from '@/hooks/useDebounce'
 import { useSearchPosts } from '@/hooks/usePosts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -24,9 +25,10 @@ const Explore = () => {
     defaultValues: { content: '' }
   })
 
-  const { data, isPending, hasNextPage, fetchNextPage } = useSearchPosts(
-    form.getValues().content || ''
-  )
+  const deboucedContent = useDebounce(form.getValues().content, 500)
+
+  const { data, isPending, hasNextPage, fetchNextPage } =
+    useSearchPosts(deboucedContent)
 
   const posts = data?.pages?.flatMap(page => page.documents)
 
