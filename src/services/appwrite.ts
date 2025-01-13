@@ -429,3 +429,33 @@ export const getSavedPosts = async (userId: string) => {
     return { documents: [], total: 0 }
   }
 }
+
+export const searchUsers = async ({
+  pageParam,
+  searchUser
+}: {
+  pageParam: string
+  searchUser: string
+}) => {
+  try {
+    const queries = [Query.limit(10), Query.orderDesc('$updatedAt')]
+    if (pageParam !== '0') {
+      queries.push(Query.cursorAfter(pageParam))
+    }
+
+    if (searchUser) {
+      queries.push(Query.contains('email', searchUser))
+    }
+
+    const users = await database.listDocuments(
+      appwriteConfig.database,
+      appwriteConfig.userCollection,
+      queries
+    )
+
+    return users
+  } catch (error) {
+    console.error(error)
+    return { documents: [], total: 0 }
+  }
+}

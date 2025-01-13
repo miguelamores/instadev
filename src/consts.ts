@@ -54,5 +54,6 @@ export const QUERY_KEYS = {
   GET_CURRENT_USER: 'getCurrentUser',
   GET_POST_BY_ID: 'getPostById',
   SEARCH_POSTS: 'searchPosts',
-  GET_SAVED_POSTS: 'getSavedPosts'
+  GET_SAVED_POSTS: 'getSavedPosts',
+  SEARCH_USERS: 'searchUsers'
 } as const
