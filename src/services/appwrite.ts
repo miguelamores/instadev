@@ -411,3 +411,21 @@ export const searchPosts = async ({
     return { documents: [], total: 0 }
   }
 }
+
+export const getSavedPosts = async (userId: string) => {
+  if (!userId) return null
+  try {
+    const savedPosts = await database.listDocuments(
+      appwriteConfig.database,
+      appwriteConfig.savesCollection,
+      [Query.equal('user', userId), Query.orderDesc('$updatedAt')]
+    )
+
+    console.log(savedPosts)
+
+    return savedPosts
+  } catch (error) {
+    console.error(error)
+    return { documents: [], total: 0 }
+  }
+}
