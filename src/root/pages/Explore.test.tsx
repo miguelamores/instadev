@@ -18,7 +18,7 @@ describe('Explore search input', () => {
     const user = userEvent.setup()
     render(<Explore />)
 
-    const input = await screen.getByRole('textbox', { name: /content/i })
+    const input = await screen.getByRole('textbox', { name: /search/i })
     // type the input
     await user.type(input, 'TDD posts')
     expect(input).toHaveValue('TDD posts')
@@ -27,7 +27,7 @@ describe('Explore search input', () => {
   it('should show results on submit form', async () => {
     const user = userEvent.setup()
     render(<Explore />)
-    const input = await screen.getByRole('textbox', { name: /content/i })
+    const input = await screen.getByRole('textbox', { name: /search/i })
     await user.type(input, 'TDD posts')
     // user press enter
     await user.keyboard('{enter}')
@@ -38,7 +38,7 @@ describe('Explore search input', () => {
   it.skip('should show a list of posts', async () => {
     const user = userEvent.setup()
     render(<Explore />)
-    const input = await screen.getByRole('textbox', { name: /content/i })
+    const input = await screen.getByRole('textbox', { name: /search/i })
     await user.type(input, 'TDD posts')
     // user press enter
     await user.keyboard('{enter}')
