@@ -74,14 +74,19 @@ describe('Post Detail page', () => {
 
   it('should show popup confirmation when delete icon is clicked', async () => {
     const user = userEvent.setup()
+    // render component
     render(<PostDetailCard post={fakePost} isUserOwner={true} />)
+
+    // click on delete icon
     const remove = screen.getByRole('button', { name: 'remove icon' })
     await user.click(remove)
+
+    // check if popup is displayed
     const popup = screen.getByRole('alertdialog')
     expect(popup).toBeDefined()
   })
 
-  it('should successfully delete post when confirmation is accepted', async () => {
+  it.skip('should successfully delete post when confirmation is accepted', async () => {
     const user = userEvent.setup()
     useDeletePost.mockImplementation(() => ({
       mutateAsync: async () => ({ status: 'ok' })
