@@ -64,7 +64,7 @@ export const useGetPostById = (id: string) => {
 export const useDeletePost = () => {
   const queryClient = useQueryClient()
 
-  const post = useMutation({
+  const { isPending, mutateAsync } = useMutation({
     mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
       deletePost(postId, imageId),
     onSuccess: () =>
@@ -73,7 +73,7 @@ export const useDeletePost = () => {
       })
   })
 
-  return post
+  return { isPending, mutateAsync }
 }
 
 export const useSearchPosts = (searchTerm: string) => {

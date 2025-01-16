@@ -2,8 +2,7 @@ import { cleanup, render, screen } from '@testing-library/react'
 import { describe, expect, it, afterEach, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import PostDetailCard from '@/components/shared/PostDetailCard'
-import { useDeletePost } from '@/hooks/usePosts'
-import { useNavigate } from 'react-router-dom'
+import * as postHooks from '@/hooks/usePosts'
 
 const fakePost = {
   content: 'Level up your skills',
@@ -16,6 +15,8 @@ const fakePost = {
   $permissions: ['a', 'b'],
   creator: { email: 'miguel@gmail.com' }
 }
+
+vi.mock('@tanstack/react-query')
 
 vi.mock('react-router-dom', () => {
   return {
@@ -86,17 +87,27 @@ describe('Post Detail page', () => {
     expect(popup).toBeDefined()
   })
 
-  it.skip('should successfully delete post when confirmation is accepted', async () => {
+  it('should successfully delete post when confirmation is accepted', async () => {
     const user = userEvent.setup()
-    useDeletePost.mockImplementation(() => ({
-      mutateAsync: async () => ({ status: 'ok' })
-    }))
-    useNavigate.mockReturnValue(() => ({ navigate: vi.fn() }))
+    const mutateFn = vi.fn()
+
+    // spyOn the custom hook and mock what we need
+    const spy = vi.spyOn(postHooks, 'useDeletePost').mockReturnValue({
+      isPending: false,
+      mutateAsync: mutateFn
+    })
+
     render(<PostDetailCard post={fakePost} isUserOwner={true} />)
+
+    // simulate user click
     const remove = screen.getByRole('button', { name: 'remove icon' })
     await user.click(remove)
     const confirm = screen.getByRole('button', { name: 'Continue' })
     await user.click(confirm)
-    expect(useDeletePost).toHaveBeenCalled()
+
+    // Ensure mutate was called with the correct arguments
+    expect(mutateFn).toHaveBeenCalledWith({ postId: fakePost.$id })
+    // Restore the original implementation
+    spy.mockRestore()
   })
 })
