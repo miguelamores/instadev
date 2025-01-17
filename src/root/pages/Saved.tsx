@@ -5,14 +5,14 @@ const Saved = () => {
   const { data } = useGetSavedPosts()
 
   return (
-    <div>
+    <section className='w-full flex flex-col items-center gap-4 py-6'>
       <h1>Saved posts</h1>
-      <ul>
+      <ul className='flex flex-col gap-3'>
         {data?.documents.map(({ post }) => (
           <PostCardOverview key={post.$id} post={post} />
         ))}
       </ul>
-    </div>
+    </section>
   )
 }
 
