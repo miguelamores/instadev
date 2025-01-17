@@ -5,7 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 const BottomNavigator = () => {
   const { pathname } = useLocation()
   return (
-    <section className='h-full flex items-center justify-between px-4 py-1'>
+    <section className='h-full flex items-center justify-between px-4 py-1 bg-[#1c1c1d] shadow-2xl shadow-white'>
       {bottombarLinks.map(link => {
         const isActive = pathname === link.route
         return (

@@ -18,7 +18,7 @@ const Header = () => {
   }, [isSuccess])
 
   return (
-    <header className='header sticky top-0 left-0 right-0 flex items-center justify-between p-5'>
+    <header className='header sticky top-0 left-0 right-0 flex items-center justify-between p-5 shadow-sm shadow-white/5'>
       <Button variant={'ghost'} onClick={() => signOut()}>
         <img src='logout.svg' alt='logout' height={25} width={25} />
         <p>Logout</p>
