@@ -38,7 +38,7 @@ const PostCardStats = ({ post, userId }: PostCardStatsType) => {
 
   return (
     <div className='flex items-center justify-between'>
-      <div className='flex items-center'>
+      <div className='flex items-center gap-2'>
         <img
           src={`${
             likedPost
@@ -51,7 +51,7 @@ const PostCardStats = ({ post, userId }: PostCardStatsType) => {
           height={24}
           onClick={handleLikePost}
         />
-        <p>0</p>
+        <p>{post.like.length}</p>
       </div>
       <div className='flex items-center'>
         <img
