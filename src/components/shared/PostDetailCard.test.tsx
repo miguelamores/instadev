@@ -20,7 +20,8 @@ vi.mock('@tanstack/react-query')
 
 vi.mock('react-router-dom', () => {
   return {
-    useNavigate: vi.fn(() => ({ navigate: vi.fn() }))
+    useNavigate: vi.fn(() => ({ navigate: vi.fn() })),
+    Link: vi.fn()
   }
 })
 
