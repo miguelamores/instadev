@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Loader2 } from 'lucide-react'
 import { useDeletePost } from '@/hooks/usePosts'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const PostDetailCard = ({ post, isUserOwner = false }) => {
   const { mutateAsync: deletePost, isPending } = useDeletePost()
@@ -46,14 +46,24 @@ const PostDetailCard = ({ post, isUserOwner = false }) => {
       </h3>
       {isUserOwner && (
         <AlertDialog>
-          <AlertDialogTrigger>
-            <img
-              width={24}
-              height={24}
-              src='/assets/icons/remove.svg'
-              alt='remove icon'
-            />
-          </AlertDialogTrigger>
+          <div className='flex items-center gap-5'>
+            <AlertDialogTrigger>
+              <img
+                width={24}
+                height={24}
+                src='/assets/icons/remove.svg'
+                alt='remove icon'
+              />
+            </AlertDialogTrigger>
+            <Link to={`/post/${post.$id}/update`}>
+              <img
+                width={24}
+                height={24}
+                src='/assets/icons/pencil.svg'
+                alt='remove icon'
+              />
+            </Link>
+          </div>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
