@@ -37,7 +37,7 @@ const Explore = () => {
   }
 
   return (
-    <section className='w-full flex flex-col items-center gap-4'>
+    <section className='w-full flex flex-col items-center p-4 gap-4'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -47,10 +47,22 @@ const Explore = () => {
             control={form.control}
             name='content'
             render={({ field }) => (
-              <FormItem className='w-full flex flex-row items-center gap-4'>
-                <FormLabel>Search</FormLabel>
+              <FormItem className='space-y-0 w-full flex justify-between items-center gap-1 px-3 bg-[#333334] rounded-full'>
+                {/* <FormLabel>Search</FormLabel> */}
+                <FormLabel>
+                  <img
+                    src='assets/icons/search.svg'
+                    alt='search icon'
+                    className='w-6 h-6 hover:cursor-pointer'
+                  />
+                </FormLabel>
+
                 <FormControl>
-                  <Input placeholder='working on TDD...' {...field} />
+                  <Input
+                    className='border-none bg-transparent focus-visible:ring-0'
+                    placeholder='Search'
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
