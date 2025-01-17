@@ -22,17 +22,19 @@ const PostCard = ({ post }: PostCardType) => {
         className='flex items-center gap-2 justify-start w-max'
       >
         <img
-          className='rounded-full w-12 h-12'
+          className='rounded-full w-16 h-16'
           height={48}
           width={48}
           src={post.creator.imageUrl}
           alt={`avatar of ${post.creator.email}`}
         />
-        <h3 className='font-semibold text-xl'>{post.creator.name}</h3>
-        {/* <h3 className='text-slate-500 text-base'>{post.creator.email} - </h3> */}
-        <h3 className='text-slate-500 text-base'>
-          {formatRelativeTime(post.creator.$createdAt)}
-        </h3>
+        <div className='flex flex-col items-start justify-between'>
+          <h3 className='font-semibold text-lg'>{post.creator.name}</h3>
+          <p className='text-slate-500 text-sm'>{post.creator.email}</p>
+          <p className='text-slate-500 text-sm'>
+            {formatRelativeTime(post.creator.$createdAt)}
+          </p>
+        </div>
       </Link>
       {isUserOwner && <Link to={`/post/${post.$id}/update`}>edit</Link>}
       <Link to={`/post/${post.$id}`} viewTransition>
