@@ -74,7 +74,11 @@ const Explore = () => {
       {form.getValues().content && (
         <h1>Results of {form.getValues().content}</h1>
       )}
-      {!form.getValues().content && <h1>Popular</h1>}
+      {!form.getValues().content && (
+        <h1 className='text-4xl font-semibold flex flex-1 w-full mb-4 justify-center'>
+          Popular
+        </h1>
+      )}
       {isPending ? <p>Loading...</p> : <ExploreList posts={posts} />}
       {hasNextPage && (
         <button
