@@ -5,7 +5,7 @@ const Saved = () => {
   const { data } = useGetSavedPosts()
 
   return (
-    <section className='w-full flex flex-col items-center gap-4 py-6'>
+    <section className='w-full flex flex-col items-center p-4 gap-4 py-6'>
       <h1 className='text-4xl font-semibold flex flex-1 w-full mb-4 justify-center'>
         Saved posts
       </h1>
