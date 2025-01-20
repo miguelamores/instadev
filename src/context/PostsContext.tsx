@@ -6,7 +6,11 @@ type PostsContextProviderType = {
   client: PostContextType
 }
 
-type PostContextType = () => Promise<Models.DocumentList<Models.Document>>
+type PostContextType = ({
+  pageParam
+}: {
+  pageParam: string
+}) => Promise<Models.DocumentList<Models.Document>>
 
 const PostsContext = createContext<PostContextType | null>(null)
 

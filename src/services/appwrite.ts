@@ -273,12 +273,17 @@ const deleteFile = async (fileId: string) => {
   }
 }
 
-export const getRecentPosts = async () => {
+export const getRecentPosts = async ({ pageParam }: { pageParam: string }) => {
   try {
+    const queries = [Query.limit(1), Query.orderDesc('$updatedAt')]
+    if (pageParam !== '0') {
+      queries.push(Query.cursorAfter(pageParam))
+    }
+
     const posts = await database.listDocuments(
       appwriteConfig.database,
       appwriteConfig.postCollection,
-      [Query.orderDesc('$createdAt'), Query.limit(20)]
+      queries
     )
 
     console.log(posts)

@@ -44,9 +44,17 @@ export const useUpdatePost = () => {
 export const useGetRecentPosts = () => {
   const getRecentPosts = usePostsContext()
 
-  const recentPosts = useQuery({
+  const recentPosts = useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-    queryFn: () => getRecentPosts()
+    queryFn: ({ pageParam }) => getRecentPosts({ pageParam }),
+    initialPageParam: '0',
+    getNextPageParam: lastPage => {
+      if (lastPage.documents.length === 0) {
+        return undefined
+      }
+      const lastId = lastPage?.documents.at(-1)?.$id
+      return lastId
+    }
   })
 
   return { recentPosts }
