@@ -1,8 +1,9 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { describe, expect, it, afterEach, vi } from 'vitest'
+import { describe, expect, it, afterEach, vi, beforeEach } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import PostDetailCard from '@/components/shared/PostDetailCard'
 import * as postHooks from '@/hooks/usePosts'
+import { useNavigate } from 'react-router-dom'
 
 const fakePost = {
   content: 'Level up your skills',
@@ -17,6 +18,15 @@ const fakePost = {
 }
 
 vi.mock('@tanstack/react-query')
+// vi.mock('react-router-dom')
+
+// vi.mock('react-router-dom', () => {
+//   return {
+//     ...vi.importActual('react-router-dom'),
+//     useNavigate: () => vi.fn(),
+//     Link: vi.fn()
+//   }
+// })
 
 vi.mock('react-router-dom', () => {
   return {
@@ -91,6 +101,8 @@ describe('Post Detail page', () => {
   it('should successfully delete post when confirmation is accepted', async () => {
     const user = userEvent.setup()
     const mutateFn = vi.fn()
+
+    // useNavigate().mockReturnValue(() => ({ navigate: vi.fn() }))
 
     // spyOn the custom hook and mock what we need
     const spy = vi.spyOn(postHooks, 'useDeletePost').mockReturnValue({

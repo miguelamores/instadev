@@ -60,7 +60,7 @@ const PostDetailCard = ({ post, isUserOwner = false }) => {
                 width={24}
                 height={24}
                 src='/assets/icons/pencil.svg'
-                alt='remove icon'
+                alt='edit icon'
               />
             </Link>
           </div>
