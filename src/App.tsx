@@ -18,6 +18,7 @@ import { PostsContextProvider } from './context/PostsContext'
 import { getRecentPosts } from './services/appwrite'
 import UpdatePost from '@/root/pages/UpdatePost'
 import PostDetail from './root/pages/PostDetail'
+import Profile from './root/pages/Profile'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
             </PostsContextProvider>
           }
         />
+        <Route path='/profile' element={<Profile />} />
         <Route path='/saved' element={<Saved />} />
         <Route path='/create-post' element={<CreatePost />} />
         <Route path='/explore' element={<Explore />} />
