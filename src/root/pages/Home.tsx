@@ -14,10 +14,12 @@ const Home = () => {
         <h1 className='text-4xl font-semibold flex sm:justify-start flex-1 w-full mb-4 justify-center'>
           Popular today
         </h1>
+        <ul className='flex flex-col gap-3'>
         {posts?.map(doc => (
           <PostCard key={doc.$id} post={doc} />
         ))}
-        {hasNextPage && (
+        </ul>
+        {hasNextPage && !isPending && (
           <ShinyButton text='Load more' onClick={fetchNextPage} />
         )}
       </section>
