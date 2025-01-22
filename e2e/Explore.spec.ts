@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Explore', () => {
   test('should render the explore page', async ({ page }) => {
     await page.goto('/')
-    await page.locator('li').filter({ hasText: 'Explore' }).click()
+    await page.getByRole('link', { name: 'Explore' }).click()
 
     await expect(page).toHaveURL('/explore')
   })
