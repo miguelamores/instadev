@@ -6,9 +6,10 @@ import { Models } from 'appwrite'
 type PostCardStatsType = {
   post: Models.Document
   userId: string
+  hideSaved?: boolean
 }
 
-const PostCardStats = ({ post, userId }: PostCardStatsType) => {
+const PostCardStats = ({ post, userId, hideSaved }: PostCardStatsType) => {
   const { savePost, deleteSavedPost } = useSavePosts()
   const { likePost, deleteLikedPost } = useLikePosts()
   const { data: currentUser } = useGetCurrentUser()
@@ -53,20 +54,22 @@ const PostCardStats = ({ post, userId }: PostCardStatsType) => {
         />
         <p>{post.like.length}</p>
       </div>
-      <div className='flex items-center'>
-        <img
-          src={`${
-            savedPost
-              ? '/public/assets/icons/saved.svg'
-              : '/public/assets/icons/save.svg'
-          } `}
-          alt='like'
-          className='w-6 h-6 stroke-white cursor-pointer'
-          width={24}
-          height={24}
-          onClick={handleSavePost}
-        />
-      </div>
+      {!hideSaved && (
+        <div className='flex items-center'>
+          <img
+            src={`${
+              savedPost
+                ? '/public/assets/icons/saved.svg'
+                : '/public/assets/icons/save.svg'
+            } `}
+            alt='like'
+            className='w-6 h-6 stroke-white cursor-pointer'
+            width={24}
+            height={24}
+            onClick={handleSavePost}
+          />
+        </div>
+      )}
     </div>
   )
 }
