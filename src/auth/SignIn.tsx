@@ -15,7 +15,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import useAuth from '@/hooks/useAuth'
 import { toast } from '@/hooks/use-toast'
-import useSession from '@/hooks/useSession'
 import { getErrorMessage } from '@/utils'
 
 const formSchema = z.object({
@@ -30,7 +29,6 @@ const SignIn = () => {
   })
 
   const { accountSignIn } = useAuth()
-  const { checkAuthUser } = useSession()
   const navigate = useNavigate()
 
   const onSubmit = async (user: z.infer<typeof formSchema>) => {
@@ -45,12 +43,8 @@ const SignIn = () => {
         return
       }
 
-      const isLoguedIn = await checkAuthUser()
-
-      if (isLoguedIn) {
-        form.reset()
-        navigate('/')
-      }
+      form.reset()
+      navigate('/')
     } catch (error) {
       console.error(error)
       toast({ title: getErrorMessage(error) })
