@@ -1,8 +1,5 @@
-import { getCurrentUser } from '@/services/appwrite'
-import { useSessionStore } from '@/store/session'
-import { getErrorMessage } from '@/utils'
-import { useCallback, useEffect } from 'react'
-import { useNavigate, use, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useGetCurrentUser } from './useGetCurrentUser'
 
 const useSession = () => {
@@ -59,6 +56,7 @@ const useSession = () => {
     }
 
     // checkAuthUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {

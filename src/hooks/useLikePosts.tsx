@@ -10,13 +10,7 @@ const useLikePosts = () => {
   const likePostMutation = useMutation({
     mutationFn: ({ userId, postId }: { userId: string; postId: string }) =>
       likePost(userId, postId),
-    onMutate: async ({
-      userId,
-      postId
-    }: {
-      userId: string
-      postId: string
-    }) => {
+    onMutate: async ({ postId }: { userId: string; postId: string }) => {
       await queryClient.cancelQueries({
         queryKey: [QUERY_KEYS.GET_CURRENT_USER]
       })
