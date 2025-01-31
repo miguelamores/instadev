@@ -16,7 +16,6 @@ import { z } from 'zod'
 import { useToast } from '@/hooks/use-toast'
 import useAuth from '@/hooks/useAuth'
 import { getErrorMessage } from '@/utils'
-import useSession from '@/hooks/useSession'
 
 const formSchema = z.object({
   name: z.string().min(2).max(30),
@@ -34,7 +33,6 @@ const SignUp = () => {
   const navigate = useNavigate()
 
   const { accountCreation, accountSignIn } = useAuth()
-  const { checkAuthUser } = useSession()
 
   const onSubmit = async (user: z.infer<typeof formSchema>) => {
     try {
@@ -55,12 +53,8 @@ const SignUp = () => {
         return
       }
 
-      const isLoguedIn = await checkAuthUser()
-
-      if (isLoguedIn) {
-        form.reset()
-        navigate('/')
-      }
+      form.reset()
+      navigate('/')
     } catch (error) {
       console.error(error)
       toast({ title: getErrorMessage(error) })

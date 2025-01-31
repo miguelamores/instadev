@@ -11,7 +11,9 @@ const UpdatePost = () => {
   const { post } = useGetPostById(postId || '')
   const isUserOwner = post.data?.creator.email === user.email
 
-  if (!isUserOwner) return navigate('/')
+  if (!isUserOwner) {
+    navigate('/')
+  }
 
   if (post.isPending) return <p>Loading....</p>
   if (post.isError) return <p>{post.error.message ?? 'Error loading post'}</p>
