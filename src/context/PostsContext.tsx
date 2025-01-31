@@ -23,7 +23,6 @@ export function PostsContextProvider({
   )
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const usePostsContext = () => {
   const context = useContext(PostsContext)
 
