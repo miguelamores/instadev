@@ -48,14 +48,11 @@ const PostCard = ({ post }: PostCardType) => {
         src={post.imageUrl}
         alt={`post image of ${post.creator.email}`}
       />
-      <div className='p-5'>
-        {/* <a href='#'>
-          <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-            {post.content}
-          </h5>
-        </a> */}
-        <PostCardStats post={post} userId={user.id} />
-      </div>
+      {user.id && (
+        <div className='p-5'>
+          <PostCardStats post={post} userId={user.id} />
+        </div>
+      )}
     </div>
   )
 }

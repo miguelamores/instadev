@@ -12,8 +12,14 @@ import {
 import { Loader2 } from 'lucide-react'
 import { useDeletePost } from '@/hooks/usePosts'
 import { Link, useNavigate } from 'react-router-dom'
+import { Post } from '@/types'
 
-const PostDetailCard = ({ post, isUserOwner = false }) => {
+type PostDetailCardType = {
+  post: Post
+  isUserOwner: boolean
+}
+
+const PostDetailCard = ({ post, isUserOwner = false }: PostDetailCardType) => {
   const { mutateAsync: deletePost, isPending } = useDeletePost()
   const navigate = useNavigate()
 

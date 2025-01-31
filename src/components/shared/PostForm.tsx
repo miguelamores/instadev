@@ -50,6 +50,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
 
   const onSubmit = async (postForm: z.infer<typeof formSchema>) => {
     try {
+      if (!user.id) {
+        throw Error('User id must not be null')
+      }
+
       if (action === 'update' && post) {
         const updatedPost = await updatePost({
           ...postForm,

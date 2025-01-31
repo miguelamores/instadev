@@ -1,10 +1,11 @@
 import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
 import useLikePosts from '@/hooks/useLikePosts'
 import useSavePosts from '@/hooks/useSavePosts'
+import { Post } from '@/types'
 import { Models } from 'appwrite'
 
 type PostCardStatsType = {
-  post: Models.Document
+  post: Post
   userId: string
   hideSaved?: boolean
 }
