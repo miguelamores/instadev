@@ -33,7 +33,7 @@ const useLikePosts = () => {
 
       return { previousUser }
     },
-    onError: (error, variables, context) => {
+    onError: (_, __, context) => {
       queryClient.setQueryData(
         [QUERY_KEYS.GET_CURRENT_USER],
         context?.previousUser
@@ -74,7 +74,7 @@ const useLikePosts = () => {
 
       return { previousUser }
     },
-    onError: (error, variables, context) => {
+    onError: (_, __, context) => {
       queryClient.setQueryData(
         [QUERY_KEYS.GET_CURRENT_USER],
         context?.previousUser

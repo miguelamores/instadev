@@ -1,4 +1,6 @@
-export function UserCard({ user }) {
+import { IUser } from '@/types'
+
+export function UserCard({ user }: { user: IUser }) {
   return (
     <div className='flex flex-col items-center p-10 w-full max-w-sm bg-transparent border border-gray-200/50 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
       {/* <div className='flex flex-col items-center pb-10'> */}

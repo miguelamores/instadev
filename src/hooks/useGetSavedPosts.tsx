@@ -8,6 +8,6 @@ export function useGetSavedPosts() {
 
   return useQuery({
     queryKey: [QUERY_KEYS.GET_SAVED_POSTS, user.id],
-    queryFn: () => getSavedPosts(user?.id)
+    queryFn: () => getSavedPosts(user.id)
   })
 }
