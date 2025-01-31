@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { screen, render } from '@testing-library/react'
-import { it, describe, expect, afterEach } from 'vitest'
+import { it, describe, expect } from 'vitest'
 
 import { ExploreList } from './ExploreList'
 

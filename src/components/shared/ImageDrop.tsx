@@ -20,7 +20,7 @@ const ImageDrop = ({ imageChange, imageUrl }: ImageDropProps) => {
       setFileUrl(objUrl)
       imageChange(acceptedFiles)
     },
-    [file]
+    [file, imageChange]
   )
 
   const { getRootProps, getInputProps } = useDropzone({

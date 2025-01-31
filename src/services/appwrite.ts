@@ -275,7 +275,7 @@ const deleteFile = async (fileId: string) => {
 
 export const getRecentPosts = async ({ pageParam }: { pageParam: string }) => {
   try {
-    const queries = [Query.limit(1), Query.orderDesc('$updatedAt')]
+    const queries = [Query.limit(2), Query.orderDesc('$updatedAt')]
     if (pageParam !== '0') {
       queries.push(Query.cursorAfter(pageParam))
     }
@@ -294,8 +294,10 @@ export const getRecentPosts = async ({ pageParam }: { pageParam: string }) => {
     return { documents: [], total: 0 }
   }
 }
-const delay = async (ms: number) =>
+
+export const delay = async (ms: number) =>
   await new Promise(resolve => setTimeout(resolve, ms))
+
 export const savePost = async (userId: string, postId: string) => {
   // await delay(1000)
   // throw new Error('error save post')

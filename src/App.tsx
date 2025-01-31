@@ -7,7 +7,6 @@ import {
 import SignIn from '@/auth/SignIn'
 import SignUp from '@/auth/SignUp'
 import AuthLayout from '@/auth/AuthLayout'
-import useSession from '@/hooks/useSession'
 import Home from '@/root/pages/Home'
 import RootLayout from '@/root/RootLayout'
 import Saved from '@/root/pages/Saved'

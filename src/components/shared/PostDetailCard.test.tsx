@@ -1,9 +1,8 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { describe, expect, it, afterEach, vi, beforeEach } from 'vitest'
+import { describe, expect, it, afterEach, vi } from 'vitest'
 import userEvent from '@testing-library/user-event'
 import PostDetailCard from '@/components/shared/PostDetailCard'
 import * as postHooks from '@/hooks/usePosts'
-import { useNavigate } from 'react-router-dom'
 
 const fakePost = {
   content: 'Level up your skills',

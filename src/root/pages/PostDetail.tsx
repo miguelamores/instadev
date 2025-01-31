@@ -1,4 +1,3 @@
-import PostCard from '@/components/shared/PostCard'
 import PostDetailCard from '@/components/shared/PostDetailCard'
 import { useGetPostById } from '@/hooks/usePosts'
 import useSession from '@/hooks/useSession'
@@ -6,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 const PostDetail = () => {
   const { postId } = useParams()
-  const {user} = useSession()
+  const { user } = useSession()
 
   const { post } = useGetPostById(postId || '')
   const isUserOwner = post.data?.creator.email === user.email

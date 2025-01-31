@@ -11,8 +11,6 @@ type PostCardType = {
 const PostCardOverview = ({ post }: PostCardType) => {
   const { user } = useSession()
 
-  const isUserOwner = post?.creator.email === user.email
-
   const isTransitioning = useViewTransitionState(`/post/${post.$id}`)
 
   return (
