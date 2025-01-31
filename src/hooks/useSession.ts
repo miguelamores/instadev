@@ -56,7 +56,6 @@ const useSession = () => {
     }
 
     // checkAuthUser()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {
