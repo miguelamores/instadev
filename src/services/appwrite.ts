@@ -1,4 +1,4 @@
-import { ID, Query } from 'appwrite'
+import { ID, Models, Query } from 'appwrite'
 import {
   account,
   appwriteConfig,
@@ -6,7 +6,7 @@ import {
   database,
   storage
 } from '@/lib/appwrite'
-import { INewPost, INewUser, IUpdatePost } from '@/types'
+import { INewPost, INewUser, IUpdatePost, IUser } from '@/types'
 
 export const createAccount = async (user: INewUser) => {
   try {
@@ -90,7 +90,7 @@ export const getAccount = async () => {
   }
 }
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<IUser> => {
   try {
     // await account.deleteSessions()
     const currentAccount = await getAccount()
@@ -102,7 +102,7 @@ export const getCurrentUser = async () => {
       [Query.equal('accountId', currentAccount.$id)]
     )
     console.log({ accountSeesion })
-    return accountSeesion.documents[0]
+    return accountSeesion.documents[0] as IUser
   } catch (error) {
     console.error(error)
     throw error

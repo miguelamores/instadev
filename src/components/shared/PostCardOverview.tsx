@@ -1,11 +1,11 @@
 import { formatRelativeTime } from '@/lib/utils'
-import { Models } from 'appwrite'
 import { Link, useViewTransitionState } from 'react-router-dom'
 import PostCardStats from './PostCardStats'
 import useSession from '@/hooks/useSession'
+import { Post } from '@/types'
 
-type PostCardType = {
-  post: Models.Document
+interface PostCardType {
+  post: Post
 }
 
 const PostCardOverview = ({ post }: PostCardType) => {
@@ -49,14 +49,11 @@ const PostCardOverview = ({ post }: PostCardType) => {
       <p className='text-slate-500 py-3 h-20 text-balance flex items-center'>
         {post.tags.map((tag: string) => `#${tag} `)}
       </p>
-      <div className='p-5 border-t-2'>
-        {/* <a href='#'>
-          <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
-            {post.content}
-          </h5>
-        </a> */}
-        <PostCardStats post={post} userId={user.id} />
-      </div>
+      {user.id && (
+        <div className='p-5 border-t-2'>
+          <PostCardStats post={post} userId={user.id} />
+        </div>
+      )}
     </div>
   )
 }

@@ -1,6 +1,7 @@
+import { Post } from '@/types'
 import PostCardOverview from './PostCardOverview'
 
-export function ExploreList({ posts }) {
+export function ExploreList({ posts }: { posts: Post[] }) {
   if (!posts?.length) {
     return <p>No posts found</p>
   }

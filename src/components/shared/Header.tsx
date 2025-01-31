@@ -7,7 +7,7 @@ const Header = () => {
   const {
     accountSignOut: { mutateAsync: signOut }
   } = useAuth()
-  const { user = {} } = useSession()
+  const { user } = useSession()
   const navigate = useNavigate()
 
   const handleSignout = async () => {
@@ -23,8 +23,8 @@ const Header = () => {
       </Button>
       <Link to='profile' className='flex items-center justify-center gap-2'>
         <img
-          src={`${user.imageUrl}`}
-          alt={`${user.username} avatar`}
+          src={`${user?.imageUrl}`}
+          alt={`${user?.username} avatar`}
           className='rounded-full w-10 h-10'
           height={40}
           width={40}
