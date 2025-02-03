@@ -3,7 +3,7 @@ import { it, describe, expect, afterEach, vi } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Explore from './Explore'
-import * as customHooks from '@/hooks/usePosts'
+// import * as customHooks from '@/hooks/usePosts'
 
 vi.mock('@/hooks/usePosts', () => {
   return {
@@ -39,14 +39,21 @@ describe('Explore search input', () => {
   it('should show loading on search', async () => {
     const user = userEvent.setup()
     render(<Explore />)
-    const useSearchPostsSpy = vi
-      .spyOn(customHooks, 'useSearchPosts')
-      .mockReturnValue({ isPending: true })
+    // const useSearchPostsSpy = vi
+    //   .spyOn(customHooks, 'useSearchPosts')
+    //   .mockReturnValue({ isPending: true })
+
+    vi.mock('@/hooks/usePosts', () => {
+      return {
+        useSearchPosts: vi.fn(() => ({ isPending: true }))
+      }
+    })
+
     const input = await screen.getByRole('textbox', { name: /search/i })
     await user.type(input, 'tdd')
     // user press enter
     await user.keyboard('{enter}')
     await expect(screen.getByText('Loading...')).toBeDefined()
-    useSearchPostsSpy.mockRestore()
+    // useSearchPostsSpy.mockRestore()
   })
 })

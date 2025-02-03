@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Home from './Home'
 import { cleanup, render, screen } from '@testing-library/react'
 import { PostsContextProvider } from '@/context/PostsContext'
-import * as PostsHook from '@/hooks/usePosts'
+// import * as PostsHook from '@/hooks/usePosts'
 
 const queryClient = new QueryClient()
 
@@ -15,7 +15,7 @@ const queryClient = new QueryClient()
 //   useIsInView: vi.fn().mockReturnValue({ isInView: false })
 // }))
 
-vi.mock('@/hooks/useIsInView')
+// vi.mock('@/hooks/useIsInView')
 
 vi.mock('react-router-dom', () => {
   return {
@@ -105,12 +105,16 @@ describe('Home page', () => {
     // })
 
     // spyOn the custom hook and mock what we need
-    const spy = vi.spyOn(PostsHook, 'useGetRecentPosts').mockReturnValue({
-      recentPosts: {
-        isPending: false,
-        fetchNextPage
-      }
-    })
+    // const spy = vi.spyOn(PostsHook, 'useGetRecentPosts').mockReturnValue({
+    //   recentPosts: {
+    //     isPending: false,
+    //     fetchNextPage
+    //   }
+    // })
+
+    vi.mock('@/hooks/usePosts', () => ({
+      useGetRecentPosts: () => ({ isPending: false, fetchNextPage })
+    }))
 
     // const scrollEl = await screen.getByTestId('home-container')
     // scrollEl.scrollTop = 1000
@@ -121,6 +125,6 @@ describe('Home page', () => {
     // })
 
     expect(fetchNextPage).toHaveBeenCalled()
-    spy.mockRestore()
+    // spy.mockRestore()
   })
 })
