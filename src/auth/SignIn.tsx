@@ -16,6 +16,7 @@ import { z } from 'zod'
 import useAuth from '@/hooks/useAuth'
 import { toast } from '@/hooks/use-toast'
 import { getErrorMessage } from '@/utils'
+import useSession from '@/hooks/useSession'
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -28,6 +29,7 @@ const SignIn = () => {
     defaultValues: { email: '', password: '' }
   })
 
+  useSession()
   const { accountSignIn } = useAuth()
   const navigate = useNavigate()
 
@@ -79,7 +81,7 @@ const SignIn = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder='*********' {...field} />
+                <Input type='password' placeholder='*********' {...field} />
               </FormControl>
 
               <FormMessage />
