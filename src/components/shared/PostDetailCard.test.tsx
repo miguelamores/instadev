@@ -279,7 +279,10 @@ describe('Post Detail page', () => {
     await user.click(confirm)
 
     // Ensure mutate was called with the correct arguments
-    expect(mutateFn).toHaveBeenCalledWith({ postId: fakePost.$id })
+    expect(mutateFn).toHaveBeenCalledWith({
+      postId: fakePost.$id,
+      imageId: fakePost.imageId
+    })
     // Restore the original implementation
     spy.mockRestore()
   })
