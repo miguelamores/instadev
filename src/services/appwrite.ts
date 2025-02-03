@@ -419,7 +419,7 @@ export const searchPosts = async ({
   }
 }
 
-export const getSavedPosts = async (userId: string) => {
+export const getSavedPosts = async (userId: string | undefined) => {
   if (!userId) return null
   try {
     const savedPosts = await database.listDocuments(

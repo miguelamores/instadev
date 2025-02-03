@@ -1,3 +1,5 @@
+import { Models } from 'appwrite'
+
 export type INavLink = {
   imgURL: string
   route: string
@@ -31,13 +33,15 @@ export type IUpdatePost = {
   tags?: string
 }
 
-export type IUser = {
+export interface IUser extends Models.Document {
   id: string
   name: string
   username: string
   email: string
   imageUrl: string
+  imageId: null
   bio: string
+  accountId: string
 }
 
 export type INewUser = {
@@ -62,8 +66,12 @@ export interface Posts {
   total: number
 }
 
-export interface Post {
+export interface Post extends Models.Document {
   content: string
   tags: string[]
   $id: string
+  imageUrl: string
+  imageId: string
+  location: string
+  creator: IUser & Models.Document
 }
