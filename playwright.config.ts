@@ -38,8 +38,13 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'global',
+      testMatch: /.*\.global\.ts/
+    },
+    {
       name: 'setup',
-      testMatch: /.*\.setup\.ts/
+      testMatch: /.*\.setup\.ts/,
+      dependencies: ['global']
     },
     {
       name: 'chromium',

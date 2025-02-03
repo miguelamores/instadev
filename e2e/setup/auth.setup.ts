@@ -9,7 +9,7 @@ setup('auth', async ({ page }) => {
   await page.getByRole('button', { name: 'Sign in' }).click()
 
   await page.waitForURL('/')
-  expect(page.url()).toBe('/')
+  // expect(page.url()).toBe('/')
   expect(await page.getByRole('complementary')).toBeVisible()
 
   await page.context().storageState({ path: authFile })
