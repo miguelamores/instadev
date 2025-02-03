@@ -43,9 +43,7 @@ const PostCardStats = ({ post, userId, hideSaved }: PostCardStatsType) => {
       <div className='flex items-center gap-2'>
         <img
           src={`${
-            likedPost
-              ? '/public/assets/icons/liked.svg'
-              : '/public/assets/icons/like.svg'
+            likedPost ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'
           }`}
           alt='like'
           className='w-6 h-6 stroke-white cursor-pointer'
@@ -59,9 +57,7 @@ const PostCardStats = ({ post, userId, hideSaved }: PostCardStatsType) => {
         <div className='flex items-center'>
           <img
             src={`${
-              savedPost
-                ? '/public/assets/icons/saved.svg'
-                : '/public/assets/icons/save.svg'
+              savedPost ? '/assets/icons/saved.svg' : '/assets/icons/save.svg'
             } `}
             alt='like'
             className='w-6 h-6 stroke-white cursor-pointer'
