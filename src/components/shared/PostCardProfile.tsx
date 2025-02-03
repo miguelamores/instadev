@@ -1,14 +1,10 @@
 import { useViewTransitionState } from 'react-router-dom'
 import PostCardStats from './PostCardStats'
-import { Post } from '@/types'
+import { IUser, Post } from '@/types'
 
 type PostCardType = {
   post: Post
-  creator: {
-    id: string
-    email: string
-    username: string
-  }
+  creator: IUser
 }
 
 const PostCardProfile = ({ post, creator }: PostCardType) => {

@@ -4,7 +4,6 @@ import Home from './Home'
 import { cleanup, render, screen } from '@testing-library/react'
 import { PostsContextProvider } from '@/context/PostsContext'
 import * as PostsHook from '@/hooks/usePosts'
-import * as viewHook from '@/hooks/useIsInView'
 
 const queryClient = new QueryClient()
 
@@ -83,10 +82,6 @@ describe('Home page', () => {
         total: 1
       })
 
-    viewHook.useIsInView.mockReturnValueOnce({
-      isInView: false
-    })
-
     render(
       <QueryClientProvider client={queryClient}>
         <PostsContextProvider client={getRecentPostsFake}>
@@ -124,10 +119,6 @@ describe('Home page', () => {
     // spyView.mockReturnValue({
     //   isInView: true
     // })
-
-    viewHook.useIsInView.mockReturnValueOnce({
-      isInView: true
-    })
 
     expect(fetchNextPage).toHaveBeenCalled()
     spy.mockRestore()

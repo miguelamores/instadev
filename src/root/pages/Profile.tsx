@@ -1,6 +1,7 @@
 import PostCardProfile from '@/components/shared/PostCardProfile'
 import { useGetCurrentUser } from '@/hooks/useGetCurrentUser'
 import useSession from '@/hooks/useSession'
+import { Post } from '@/types'
 
 const Profile = () => {
   const { user } = useSession()
@@ -28,8 +29,8 @@ const Profile = () => {
           Your posts:
         </h2>
         <ul className='flex flex-col gap-3 items-center'>
-          {currentUser?.posts.map(post => (
-            <PostCardProfile key={post.$id} post={post} creator={user} />
+          {currentUser?.posts.map((post: Post) => (
+            <PostCardProfile key={post.$id} post={post} creator={currentUser} />
           ))}
         </ul>
       </section>

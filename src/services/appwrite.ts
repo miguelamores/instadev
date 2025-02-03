@@ -281,18 +281,22 @@ const deleteFile = async (fileId: string) => {
   }
 }
 
-export const getRecentPosts = async ({ pageParam }: { pageParam: string }) => {
+export const getRecentPosts = async ({
+  pageParam
+}: {
+  pageParam: string
+}): Promise<IPaginatedPosts> => {
   try {
     const queries = [Query.limit(2), Query.orderDesc('$updatedAt')]
     if (pageParam !== '0') {
       queries.push(Query.cursorAfter(pageParam))
     }
 
-    const posts = await database.listDocuments(
+    const posts = (await database.listDocuments(
       appwriteConfig.database,
       appwriteConfig.postCollection,
       queries
-    )
+    )) as IPaginatedPosts
 
     console.log(posts)
 
