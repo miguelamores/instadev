@@ -1,17 +1,8 @@
 import { ISessionStoreType } from '@/types'
 import { create } from 'zustand'
 
-const user = {
-  id: '',
-  name: '',
-  username: '',
-  email: '',
-  imageUrl: '',
-  bio: ''
-}
-
 export const useSessionStore = create<ISessionStoreType>(set => ({
-  user,
+  user: null,
   isLoading: false,
   isAuthenticated: false,
   setUser: user => set(() => ({ user })),

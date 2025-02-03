@@ -52,7 +52,7 @@ export type INewUser = {
 }
 
 export type ISessionStoreType = {
-  user: IUser
+  user: IUser | null
   isLoading: boolean
   isAuthenticated: boolean
   setUser: (user: IUser) => void
