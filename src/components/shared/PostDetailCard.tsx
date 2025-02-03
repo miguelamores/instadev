@@ -16,7 +16,7 @@ import { Post } from '@/types'
 
 type PostDetailCardType = {
   post: Post
-  isUserOwner: boolean
+  isUserOwner?: boolean
 }
 
 const PostDetailCard = ({ post, isUserOwner = false }: PostDetailCardType) => {

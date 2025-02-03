@@ -1,4 +1,4 @@
-import { ID, Models, Query } from 'appwrite'
+import { ID, Query } from 'appwrite'
 import {
   account,
   appwriteConfig,
@@ -6,7 +6,15 @@ import {
   database,
   storage
 } from '@/lib/appwrite'
-import { INewPost, INewUser, IUpdatePost, IUser } from '@/types'
+import {
+  INewPost,
+  INewUser,
+  IPaginatedPosts,
+  IPaginatedUsers,
+  IUpdatePost,
+  IUser,
+  Post
+} from '@/types'
 
 export const createAccount = async (user: INewUser) => {
   try {
@@ -372,13 +380,13 @@ export const deleteLikedPost = async (documentId: string) => {
   }
 }
 
-export const getPostById = async (id: string) => {
+export const getPostById = async (id: string): Promise<Post> => {
   try {
-    const post = await database.getDocument(
+    const post = (await database.getDocument(
       appwriteConfig.database,
       appwriteConfig.postCollection,
       id
-    )
+    )) as Post
 
     if (!post) throw Error
 
@@ -395,7 +403,7 @@ export const searchPosts = async ({
 }: {
   pageParam: string
   searchTerm: string
-}) => {
+}): Promise<IPaginatedPosts> => {
   try {
     const queries = [Query.limit(1), Query.orderDesc('$updatedAt')]
     if (pageParam !== '0') {
@@ -406,11 +414,11 @@ export const searchPosts = async ({
       queries.push(Query.search('content', searchTerm))
     }
 
-    const posts = await database.listDocuments(
+    const posts = (await database.listDocuments(
       appwriteConfig.database,
       appwriteConfig.postCollection,
       queries
-    )
+    )) as IPaginatedPosts
 
     return posts
   } catch (error) {
@@ -443,7 +451,7 @@ export const searchUsers = async ({
 }: {
   pageParam: string
   searchUser: string
-}) => {
+}): Promise<IPaginatedUsers> => {
   try {
     const queries = [Query.limit(10), Query.orderDesc('$updatedAt')]
     if (pageParam !== '0') {
@@ -454,11 +462,11 @@ export const searchUsers = async ({
       queries.push(Query.contains('email', searchUser))
     }
 
-    const users = await database.listDocuments(
+    const users = (await database.listDocuments(
       appwriteConfig.database,
       appwriteConfig.userCollection,
       queries
-    )
+    )) as IPaginatedUsers
 
     return users
   } catch (error) {

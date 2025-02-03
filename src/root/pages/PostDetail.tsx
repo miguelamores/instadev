@@ -11,7 +11,7 @@ const PostDetail = () => {
   const isUserOwner = post.data?.creator.email === user.email
 
   if (post.isPending) return <p>Loading....</p>
-  // if (post.isError) return <p>{post.error.message ?? 'Error loading post'}</p>
+  if (post.isError) return <p>{post.error.message ?? 'Error loading post'}</p>
 
   // console.log(post.data)
 

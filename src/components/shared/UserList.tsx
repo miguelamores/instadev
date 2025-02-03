@@ -1,7 +1,7 @@
 import { IUser } from '@/types'
 import { UserCard } from './UserCard'
 
-export function UserList({ users }: { users: IUser[] }) {
+export function UserList({ users }: { users: IUser[] | undefined }) {
   if (!users?.length) {
     return <p>No users found</p>
   }

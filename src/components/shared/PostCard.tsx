@@ -1,11 +1,11 @@
 import { formatRelativeTime } from '@/lib/utils'
-import { Models } from 'appwrite'
 import { Link, useViewTransitionState } from 'react-router-dom'
 import PostCardStats from './PostCardStats'
 import useSession from '@/hooks/useSession'
+import { Post } from '@/types'
 
 type PostCardType = {
-  post: Models.Document
+  post: Post
 }
 
 const PostCard = ({ post }: PostCardType) => {

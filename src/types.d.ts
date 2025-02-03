@@ -40,7 +40,7 @@ export interface IUser extends Models.Document {
   email: string
   imageUrl: string
   imageId: null
-  bio: string
+  bio: string | null
   accountId: string
 }
 
@@ -74,4 +74,14 @@ export interface Post extends Models.Document {
   imageId: string
   location: string
   creator: IUser & Models.Document
+}
+
+export interface IPaginatedPosts {
+  documents: Post[]
+  total: number
+}
+
+export interface IPaginatedUsers {
+  documents: IUser[]
+  total: number
 }

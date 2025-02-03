@@ -1,9 +1,9 @@
-import { Models } from 'appwrite'
 import { useViewTransitionState } from 'react-router-dom'
 import PostCardStats from './PostCardStats'
+import { Post } from '@/types'
 
 type PostCardType = {
-  post: Models.Document
+  post: Post
   creator: {
     id: string
     email: string
