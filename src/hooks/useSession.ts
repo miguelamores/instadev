@@ -10,7 +10,7 @@ const useSession = () => {
   // const setIsAuthenticated = useSessionStore(state => state.setIsAuthenticated)
   // const setIsLoading = useSessionStore(state => state.setIsLoading)
   const navigate = useNavigate()
-  const { data: currentUser } = useGetCurrentUser()
+  const { data: currentUser, isError, error } = useGetCurrentUser()
   console.log(currentUser)
 
   // const checkAuthUser = () => {
@@ -57,6 +57,13 @@ const useSession = () => {
 
     // checkAuthUser()
   }, [])
+
+  useEffect(() => {
+    if (isError && error.message === 'Unauthorized') {
+      localStorage.removeItem('cookieFallback')
+      navigate('/sign-in')
+    }
+  }, [isError])
 
   return {
     user: { ...currentUser, id: currentUser?.$id },
