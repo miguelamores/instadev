@@ -102,7 +102,7 @@ export const getCurrentUser = async (): Promise<IUser> => {
   try {
     // await account.deleteSessions()
     const currentAccount = await getAccount()
-    if (!currentAccount) throw Error
+    if (!currentAccount) throw Error('Unauthorized')
 
     const accountSeesion = await database.listDocuments(
       appwriteConfig.database,
