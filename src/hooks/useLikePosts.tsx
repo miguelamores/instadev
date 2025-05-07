@@ -25,7 +25,7 @@ const useLikePosts = () => {
           if (oldUser) {
             return {
               ...oldUser,
-              like: [...oldUser.like, { post: { $id: postId } }]
+              likes: [...oldUser.likes, { post: { $id: postId } }]
             }
           }
         }
@@ -64,7 +64,7 @@ const useLikePosts = () => {
           if (oldUser) {
             return {
               ...oldUser,
-              like: oldUser.like.filter(
+              likes: oldUser.likes.filter(
                 (document: Models.Document) => document.$id !== documentId
               )
             }

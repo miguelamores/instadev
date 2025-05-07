@@ -74,8 +74,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
         userId: user.id
       })
 
-      if (!newPost) toast({ title: 'Error creating post, Please try again' })
-
+      if (!newPost) {
+        toast({ title: 'Error creating post, Please try again' })
+        return
+      }
       navigate('/')
     } catch (error) {
       console.error(error)

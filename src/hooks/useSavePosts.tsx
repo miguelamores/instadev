@@ -25,7 +25,7 @@ const useSavePosts = () => {
           if (oldUser) {
             return {
               ...oldUser,
-              save: [...oldUser.save, { post: { $id: postId } }]
+              saves: [...oldUser.saves, { post: { $id: postId } }]
             }
           }
         }
@@ -67,7 +67,7 @@ const useSavePosts = () => {
           if (oldUser) {
             return {
               ...oldUser,
-              save: oldUser.save.filter(
+              saves: oldUser.saves.filter(
                 (document: Models.Document) => document.$id !== documentId
               )
             }

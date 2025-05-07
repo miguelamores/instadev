@@ -15,10 +15,10 @@ const PostCardStats = ({ post, userId, hideSaved }: PostCardStatsType) => {
   const { likePost, deleteLikedPost } = useLikePosts()
   const { data: currentUser } = useGetCurrentUser()
 
-  const savedPost = currentUser?.save.find(
+  const savedPost = currentUser?.saves.find(
     (record: Models.Document) => record.post.$id === post.$id
   )
-  const likedPost = currentUser?.like.find(
+  const likedPost = currentUser?.likes.find(
     (record: Models.Document) => record.post.$id === post.$id
   )
 
@@ -51,7 +51,7 @@ const PostCardStats = ({ post, userId, hideSaved }: PostCardStatsType) => {
           height={24}
           onClick={handleLikePost}
         />
-        <p>{post.like.length}</p>
+        <p>{post.likedBy.length}</p>
       </div>
       {!hideSaved && (
         <div className='flex items-center'>
