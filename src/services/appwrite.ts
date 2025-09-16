@@ -15,6 +15,7 @@ import {
   IUser,
   Post
 } from '@/types'
+import { FileError, PostCreateError } from '@/utils/errors'
 
 export const createAccount = async (user: INewUser) => {
   try {
@@ -100,6 +101,15 @@ export const getAccount = async () => {
 
 export const getCurrentUser = async (): Promise<IUser> => {
   try {
+    // return fetch('https://cloud.appwrite.io/v1/account', { method: 'GET' })
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     return res
+    //   })
+    //   .catch(() => {
+    //     console.log('error')
+    //     throw Error
+    //   })
     // await account.deleteSessions()
     const currentAccount = await getAccount()
     if (!currentAccount) throw Error('Unauthorized')
@@ -130,7 +140,7 @@ export const createPost = async (post: INewPost) => {
   try {
     const file = await uploadFile(post.file[0])
 
-    if (!file) throw Error
+    if (!file) throw new FileError('File upload failed')
 
     const fileUrl = getFilePreview(file.$id)
 
@@ -158,12 +168,19 @@ export const createPost = async (post: INewPost) => {
 
     if (!createdPost) {
       await deleteFile(file.$id)
-      throw Error
+      throw new PostCreateError('Post creation failed')
     }
 
     return createPost
   } catch (error) {
-    console.error(error)
+    if (error instanceof FileError) {
+      // Show a user-friendly error message
+      console.error('File upload error:', error.message)
+    }
+    if (error instanceof PostCreateError) {
+      // Show a user-friendly error message
+      console.error('Post creation error:', error.message)
+    }
   }
 }
 
@@ -298,7 +315,6 @@ export const getRecentPosts = async ({
       queries
     )) as IPaginatedPosts
 
-    console.log(posts)
 
     return posts
   } catch (error) {
