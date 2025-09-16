@@ -3,6 +3,7 @@ import { Link, useViewTransitionState } from 'react-router-dom'
 import PostCardStats from './PostCardStats'
 import useSession from '@/hooks/useSession'
 import { Post } from '@/types'
+import FeatureEnabled from './FeatureEnabled'
 
 type PostCardType = {
   post: Post
@@ -10,7 +11,6 @@ type PostCardType = {
 
 const PostCard = ({ post }: PostCardType) => {
   const { user } = useSession()
-
   const isTransitioning = useViewTransitionState(`/post/${post.$id}`)
 
   return (
@@ -50,7 +50,9 @@ const PostCard = ({ post }: PostCardType) => {
       />
       {user.id && (
         <div className='p-5'>
-          <PostCardStats post={post} userId={user.id} />
+          <FeatureEnabled flagKey='POST_CARD_STATS'>
+            <PostCardStats post={post} userId={user.id} />
+          </FeatureEnabled>
         </div>
       )}
     </div>
